@@ -426,7 +426,7 @@ namespace caffe {
 			for (int i = 0; i < other.shape().dim_size(); ++i) {
 				other_shape[i] = other.shape().dim(i);
 			}
-			return shape_ == other_shape;
+			return shape_ == other_shape;//判断维度信息是否一致
 		}
 
 	template <typename Dtype>

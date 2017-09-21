@@ -82,7 +82,7 @@ namespace caffe {
 				       *
 				       * @param end_axis The first axis to exclude from the slice.
 				       */
-				      inline int count(int start_axis, int end_axis) const {
+				      inline int count(int start_axis, int end_axis) const {//计算从start_axis到end_axis，总的容量
 					      CHECK_LE(start_axis, end_axis);
 					      CHECK_GE(start_axis, 0);
 					      CHECK_GE(end_axis, 0);
@@ -100,7 +100,7 @@ namespace caffe {
 				       *
 				       * @param start_axis The first axis to include in the slice.
 				       */
-				      inline int count(int start_axis) const {
+				      inline int count(int start_axis) const {//计算从start_axis到结尾，总的容量
 					      return count(start_axis, num_axes());
 				      }
 
@@ -129,14 +129,14 @@ namespace caffe {
 				      }
 
 				      /// @brief Deprecated legacy shape accessor num: use shape(0) instead.
-				      inline int num() const { return LegacyShape(0); }
+				      inline int num() const { return LegacyShape(0); }//返回第一维度的容量
 				      /// @brief Deprecated legacy shape accessor channels: use shape(1) instead.
-				      inline int channels() const { return LegacyShape(1); }
+				      inline int channels() const { return LegacyShape(1); }//返回第二维度的容量
 				      /// @brief Deprecated legacy shape accessor height: use shape(2) instead.
-				      inline int height() const { return LegacyShape(2); }
+				      inline int height() const { return LegacyShape(2); }//返回第三维度的容量
 				      /// @brief Deprecated legacy shape accessor width: use shape(3) instead.
-				      inline int width() const { return LegacyShape(3); }
-				      inline int LegacyShape(int index) const {
+				      inline int width() const { return LegacyShape(3); }//返回第四维度的容量
+				      inline int LegacyShape(int index) const {//返回某一维度的容量
 					      CHECK_LE(num_axes(), 4)
 						      << "Cannot use legacy accessors on Blobs with > 4 axes.";
 					      CHECK_LT(index, 4);
@@ -151,7 +151,7 @@ namespace caffe {
 				      }
 
 				      inline int offset(const int n, const int c = 0, const int h = 0,
-						      const int w = 0) const {
+						      const int w = 0) const {//计算数据的偏移量，感觉有点问题，应该是(((n*num() + c)*channels() + h) *height() + w ) * width
 					      CHECK_GE(n, 0);
 					      CHECK_LE(n, num());
 					      CHECK_GE(channels(), 0);
@@ -163,7 +163,7 @@ namespace caffe {
 					      return ((n * channels() + c) * height() + h) * width() + w;
 				      }
 
-				      inline int offset(const vector<int>& indices) const {
+				      inline int offset(const vector<int>& indices) const {//计算数组的偏移量
 					      CHECK_LE(indices.size(), num_axes());
 					      int offset = 0;
 					      for (int i = 0; i < num_axes(); ++i) {
@@ -186,64 +186,64 @@ namespace caffe {
 				       *        shape if necessary
 				       */
 				      void CopyFrom(const Blob<Dtype>& source, bool copy_diff = false,
-						      bool reshape = false);
+						      bool reshape = false);//从别的blob copy 过来 
 
 				      inline Dtype data_at(const int n, const int c, const int h,
-						      const int w) const {
+						      const int w) const {//返回在数据矩阵某个位置的数据
 					      return cpu_data()[offset(n, c, h, w)];
 				      }
 
 				      inline Dtype diff_at(const int n, const int c, const int h,
-						      const int w) const {
+						      const int w) const {//返回在差异矩阵某个位置的数据
 					      return cpu_diff()[offset(n, c, h, w)];
 				      }
 
-				      inline Dtype data_at(const vector<int>& index) const {
+				      inline Dtype data_at(const vector<int>& index) const {//返回在数据矩阵某个位置的数据
 					      return cpu_data()[offset(index)];
 				      }
 
-				      inline Dtype diff_at(const vector<int>& index) const {
+				      inline Dtype diff_at(const vector<int>& index) const {//返回在差异矩阵某个位置的数据
 					      return cpu_diff()[offset(index)];
 				      }
 
-				      inline const shared_ptr<SyncedMemory>& data() const {
+				      inline const shared_ptr<SyncedMemory>& data() const {//返回数据矩阵指针，不能修改
 					      CHECK(data_);
 					      return data_;
 				      }
 
-				      inline const shared_ptr<SyncedMemory>& diff() const {
+				      inline const shared_ptr<SyncedMemory>& diff() const {//返回差异矩阵的指针，不能修改
 					      CHECK(diff_);
 					      return diff_;
 				      }
 
-				      const Dtype* cpu_data() const;
-				      void set_cpu_data(Dtype* data);
-				      const int* gpu_shape() const;
-				      const Dtype* gpu_data() const;
-				      void set_gpu_data(Dtype* data);
-				      const Dtype* cpu_diff() const;
-				      const Dtype* gpu_diff() const;
-				      Dtype* mutable_cpu_data();
-				      Dtype* mutable_gpu_data();
-				      Dtype* mutable_cpu_diff();
-				      Dtype* mutable_gpu_diff();
-				      void Update();
-				      void FromProto(const BlobProto& proto, bool reshape = true);
-				      void ToProto(BlobProto* proto, bool write_diff = false) const;
+				      const Dtype* cpu_data() const;//返回cpu的数据矩阵
+				      void set_cpu_data(Dtype* data);//设置cpu的数据矩阵
+				      const int* gpu_shape() const;//返回gpu侧的维度信息
+				      const Dtype* gpu_data() const;//返回gpu数据矩阵
+				      void set_gpu_data(Dtype* data);//设置gpu数据矩阵
+				      const Dtype* cpu_diff() const;//返回cpu差异矩阵
+				      const Dtype* gpu_diff() const;//返回gpu差异矩阵
+				      Dtype* mutable_cpu_data();//返回cpu数据指针，可以修改
+				      Dtype* mutable_gpu_data();//返回gpu数据指针，可以修改
+				      Dtype* mutable_cpu_diff();//返回cpu差异矩阵指针，可以修改
+				      Dtype* mutable_gpu_diff();//返回ghpu差异矩阵指针，可以修改
+				      void Update();//更新数据矩阵，data - diff
+				      void FromProto(const BlobProto& proto, bool reshape = true);//从pb导入
+				      void ToProto(BlobProto* proto, bool write_diff = false) const;//导出到pb
 
 				      /// @brief Compute the sum of absolute values (L1 norm) of the data.
-				      Dtype asum_data() const;
+				      Dtype asum_data() const;//计算数据的L1范数，绝对值求和
 				      /// @brief Compute the sum of absolute values (L1 norm) of the diff.
-				      Dtype asum_diff() const;
+				      Dtype asum_diff() const;//计算差异矩阵的L1范数
 				      /// @brief Compute the sum of squares (L2 norm squared) of the data.
-				      Dtype sumsq_data() const;
+				      Dtype sumsq_data() const;//计算数据的L2范数，欧式距离
 				      /// @brief Compute the sum of squares (L2 norm squared) of the diff.
-				      Dtype sumsq_diff() const;
+				      Dtype sumsq_diff() const;//计算差异矩阵的L2范数
 
 				      /// @brief Scale the blob data by a constant factor.
-				      void scale_data(Dtype scale_factor);
+				      void scale_data(Dtype scale_factor);//对数据矩阵乘以一个数
 				      /// @brief Scale the blob diff by a constant factor.
-				      void scale_diff(Dtype scale_factor);
+				      void scale_diff(Dtype scale_factor);//对差异矩阵乘以一个数
 
 				      /**
 				       * @brief Set the data_ shared_ptr to point to the SyncedMemory holding the
@@ -253,7 +253,7 @@ namespace caffe {
 				       * This deallocates the SyncedMemory holding this Blob's data_, as
 				       * shared_ptr calls its destructor when reset with the "=" operator.
 				       */
-				      void ShareData(const Blob& other);
+				      void ShareData(const Blob& other);//从其他blob复制data矩阵
 				      /**
 				       * @brief Set the diff_ shared_ptr to point to the SyncedMemory holding the
 				       *        diff_ of Blob other -- useful in Layer%s which simply perform a copy
@@ -262,9 +262,9 @@ namespace caffe {
 				       * This deallocates the SyncedMemory holding this Blob's diff_, as
 				       * shared_ptr calls its destructor when reset with the "=" operator.
 				       */
-				      void ShareDiff(const Blob& other);
+				      void ShareDiff(const Blob& other);//从其他blob复制diff矩阵
 
-				      bool ShapeEquals(const BlobProto& other);
+				      bool ShapeEquals(const BlobProto& other);//判断两个blob的容量是否一样
 
 			      protected:
 				      shared_ptr<SyncedMemory> data_;//存储的数据
