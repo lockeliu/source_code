@@ -24,10 +24,10 @@ namespace caffe {
 			CHECK_LE(shape.size(), kMaxBlobAxes);//维度数要小于等于最大值
 			count_ = 1;
 			shape_.resize(shape.size());//存储各个维度的容量的
-			if (!shape_data_ || shape_data_->size() < shape.size() * sizeof(int)) {//如果shape_data不存在，或者本身size比需要的小，需要重新申请
-				shape_data_.reset(new SyncedMemory(shape.size() * sizeof(int)));
+			if (!shape_data_ || shape_data_->size() < shape.size() * sizeof(int)) {//如果shape_data_不存在，或者本身size比需要的小，需要重新申请
+				shape_data_.reset(new SyncedMemory(shape.size() * sizeof(int)));//重新申请内存
 			}
-			int* shape_data = static_cast<int*>(shape_data_->mutable_cpu_data());
+			int* shape_data = static_cast<int*>(shape_data_->mutable_cpu_data());//拿出shape_data的指针
 			for (int i = 0; i < shape.size(); ++i) {
 				CHECK_GE(shape[i], 0);//大于等于0
 				if (count_ != 0) {//不能大于int32
@@ -39,13 +39,13 @@ namespace caffe {
 			}
 			if (count_ > capacity_) {//如果当前需要的存储数量比容量还大，重新申请内存
 				capacity_ = count_;
-				data_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));
-				diff_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));
+				data_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));//重新申请内存
+				diff_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));//重新申请内存
 			}
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::Reshape(const BlobShape& shape) {
+		void Blob<Dtype>::Reshape(const BlobShape& shape) {//改为维度信息
 			CHECK_LE(shape.dim_size(), kMaxBlobAxes);
 			vector<int> shape_vec(shape.dim_size());
 			for (int i = 0; i < shape.dim_size(); ++i) {
@@ -55,13 +55,13 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::ReshapeLike(const Blob<Dtype>& other) {
+		void Blob<Dtype>::ReshapeLike(const Blob<Dtype>& other) {//更改维度信息
 			Reshape(other.shape());
 		}
 
 	template <typename Dtype>
 		Blob<Dtype>::Blob(const int num, const int channels, const int height,
-				const int width)
+				const int width)//初始化一个四维的blob
 		// capacity_ must be initialized before calling Reshape
 		: capacity_(0) {
 			Reshape(num, channels, height, width);
