@@ -40,12 +40,12 @@ namespace caffe {
 				explicit Layer(const LayerParameter& param)
 					: layer_param_(param) {
 						// Set phase and copy blobs (if there are any).
-						phase_ = param.phase();
+						phase_ = param.phase();//模式
 						if (layer_param_.blobs_size() > 0) {
 							blobs_.resize(layer_param_.blobs_size());
 							for (int i = 0; i < layer_param_.blobs_size(); ++i) {
-								blobs_[i].reset(new Blob<Dtype>());
-								blobs_[i]->FromProto(layer_param_.blobs(i));
+								blobs_[i].reset(new Blob<Dtype>());//设置训练的参数
+								blobs_[i]->FromProto(layer_param_.blobs(i));//从pb导入
 							}
 						}
 					}
@@ -345,8 +345,8 @@ namespace caffe {
 				 */
 				virtual void CheckBlobCounts(const vector<Blob<Dtype>*>& bottom,
 						const vector<Blob<Dtype>*>& top) {
-					if (ExactNumBottomBlobs() >= 0) {
-						CHECK_EQ(ExactNumBottomBlobs(), bottom.size())
+					if (ExactNumBottomBlobs() >= 0) {//如果该层有确切数字
+						CHECK_EQ(ExactNumBottomBlobs(), bottom.size())//那么bottom需要相等
 							<< type() << " Layer takes " << ExactNumBottomBlobs()
 							<< " bottom blob(s) as input.";
 					}
@@ -375,7 +375,7 @@ namespace caffe {
 							<< type() << " Layer produces at most " << MaxTopBlobs()
 							<< " top blob(s) as output.";
 					}
-					if (EqualNumBottomTopBlobs()) {
+					if (EqualNumBottomTopBlobs()) {//输入输出需要相等
 						CHECK_EQ(bottom.size(), top.size())
 							<< type() << " Layer produces one top blob as output for each "
 							<< "bottom blob input.";
