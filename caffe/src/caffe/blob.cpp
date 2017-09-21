@@ -75,19 +75,19 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		const int* Blob<Dtype>::gpu_shape() const {
+		const int* Blob<Dtype>::gpu_shape() const {//拿出gpu的维度信息，不能修改
 			CHECK(shape_data_);
 			return (const int*)shape_data_->gpu_data();
 		}
 
 	template <typename Dtype>
-		const Dtype* Blob<Dtype>::cpu_data() const {
+		const Dtype* Blob<Dtype>::cpu_data() const {//拿出cpu的数据矩阵，不能修改
 			CHECK(data_);
 			return (const Dtype*)data_->cpu_data();
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::set_cpu_data(Dtype* data) {
+		void Blob<Dtype>::set_cpu_data(Dtype* data) {//设置cpu的数据矩阵
 			CHECK(data);
 			// Make sure CPU and GPU sizes remain equal
 			size_t size = count_ * sizeof(Dtype);
@@ -99,13 +99,13 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		const Dtype* Blob<Dtype>::gpu_data() const {
+		const Dtype* Blob<Dtype>::gpu_data() const {//拿出gpu的矩阵矩阵，不能修改
 			CHECK(data_);
 			return (const Dtype*)data_->gpu_data();
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::set_gpu_data(Dtype* data) {
+		void Blob<Dtype>::set_gpu_data(Dtype* data) {//设置gpu的数据矩阵
 			CHECK(data);
 			// Make sure CPU and GPU sizes remain equal
 			size_t size = count_ * sizeof(Dtype);
@@ -117,49 +117,49 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		const Dtype* Blob<Dtype>::cpu_diff() const {
+		const Dtype* Blob<Dtype>::cpu_diff() const {//拿出cpu的差异矩阵，不能修改
 			CHECK(diff_);
 			return (const Dtype*)diff_->cpu_data();
 		}
 
 	template <typename Dtype>
-		const Dtype* Blob<Dtype>::gpu_diff() const {
+		const Dtype* Blob<Dtype>::gpu_diff() const {//拿出gpu的差异矩阵，不能修改
 			CHECK(diff_);
 			return (const Dtype*)diff_->gpu_data();
 		}
 
 	template <typename Dtype>
-		Dtype* Blob<Dtype>::mutable_cpu_data() {
+		Dtype* Blob<Dtype>::mutable_cpu_data() {//拿出cpu的数据矩阵
 			CHECK(data_);
 			return static_cast<Dtype*>(data_->mutable_cpu_data());
 		}
 
 	template <typename Dtype>
-		Dtype* Blob<Dtype>::mutable_gpu_data() {
+		Dtype* Blob<Dtype>::mutable_gpu_data() {//拿出gpu的数据矩阵
 			CHECK(data_);
 			return static_cast<Dtype*>(data_->mutable_gpu_data());
 		}
 
 	template <typename Dtype>
-		Dtype* Blob<Dtype>::mutable_cpu_diff() {
+		Dtype* Blob<Dtype>::mutable_cpu_diff() {//拿出cpu的差异矩阵
 			CHECK(diff_);
 			return static_cast<Dtype*>(diff_->mutable_cpu_data());
 		}
 
 	template <typename Dtype>
-		Dtype* Blob<Dtype>::mutable_gpu_diff() {
+		Dtype* Blob<Dtype>::mutable_gpu_diff() {//拿出gpu的差异矩阵
 			CHECK(diff_);
 			return static_cast<Dtype*>(diff_->mutable_gpu_data());
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::ShareData(const Blob& other) {
+		void Blob<Dtype>::ShareData(const Blob& other) {//使用other的数据矩阵
 			CHECK_EQ(count_, other.count());
 			data_ = other.data();
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::ShareDiff(const Blob& other) {
+		void Blob<Dtype>::ShareDiff(const Blob& other) {//使用other的差异矩阵
 			CHECK_EQ(count_, other.count());
 			diff_ = other.diff();
 		}
@@ -171,7 +171,7 @@ namespace caffe {
 	template <> void Blob<int>::Update() { NOT_IMPLEMENTED; }
 
 	template <typename Dtype>
-		void Blob<Dtype>::Update() {
+		void Blob<Dtype>::Update() {//变更数据矩阵，data-diff
 			// We will perform update based on where the data is located.
 			switch (data_->head()) {
 				case SyncedMemory::HEAD_AT_CPU:
@@ -207,7 +207,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		Dtype Blob<Dtype>::asum_data() const {
+		Dtype Blob<Dtype>::asum_data() const {//计算数据矩阵的L1范数
 			if (!data_) { return 0; }
 			switch (data_->head()) {
 				case SyncedMemory::HEAD_AT_CPU:
@@ -242,7 +242,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		Dtype Blob<Dtype>::asum_diff() const {
+		Dtype Blob<Dtype>::asum_diff() const {//计算差异矩阵的L1范数
 			if (!diff_) { return 0; }
 			switch (diff_->head()) {
 				case SyncedMemory::HEAD_AT_CPU:
@@ -277,7 +277,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		Dtype Blob<Dtype>::sumsq_data() const {
+		Dtype Blob<Dtype>::sumsq_data() const {//计算数据矩阵的L2范数
 			Dtype sumsq;
 			const Dtype* data;
 			if (!data_) { return 0; }
@@ -314,7 +314,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		Dtype Blob<Dtype>::sumsq_diff() const {
+		Dtype Blob<Dtype>::sumsq_diff() const {//计算差异矩阵的L2范数
 			Dtype sumsq;
 			const Dtype* diff;
 			if (!diff_) { return 0; }
@@ -349,7 +349,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		void Blob<Dtype>::scale_data(Dtype scale_factor) {
+		void Blob<Dtype>::scale_data(Dtype scale_factor) {//数据矩阵乘以一个因子
 			Dtype* data;
 			if (!data_) { return; }
 			switch (data_->head()) {
@@ -382,7 +382,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-		void Blob<Dtype>::scale_diff(Dtype scale_factor) {
+		void Blob<Dtype>::scale_diff(Dtype scale_factor) {//差异矩阵乘以一个因子
 			Dtype* diff;
 			if (!diff_) { return; }
 			switch (diff_->head()) {
@@ -407,7 +407,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		bool Blob<Dtype>::ShapeEquals(const BlobProto& other) {
+		bool Blob<Dtype>::ShapeEquals(const BlobProto& other) {//判断维度信息是否一致
 			if (other.has_num() || other.has_channels() ||
 					other.has_height() || other.has_width()) {
 				// Using deprecated 4D Blob dimensions --
@@ -430,10 +430,10 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Blob<Dtype>::CopyFrom(const Blob& source, bool copy_diff, bool reshape) {
+		void Blob<Dtype>::CopyFrom(const Blob& source, bool copy_diff, bool reshape) {//如果copy_diff为true就复制差异矩阵，如果copy_diff为false就复制数据矩阵
 			if (source.count() != count_ || source.shape() != shape_) {
 				if (reshape) {
-					ReshapeLike(source);
+					ReshapeLike(source);//更新维度信息
 				} else {
 					LOG(FATAL) << "Trying to copy blobs of different sizes.";
 				}
@@ -442,19 +442,19 @@ namespace caffe {
 				case Caffe::GPU:
 					if (copy_diff) {
 						caffe_copy(count_, source.gpu_diff(),
-								static_cast<Dtype*>(diff_->mutable_gpu_data()));
+								static_cast<Dtype*>(diff_->mutable_gpu_data()));//复制差异矩阵
 					} else {
 						caffe_copy(count_, source.gpu_data(),
-								static_cast<Dtype*>(data_->mutable_gpu_data()));
+								static_cast<Dtype*>(data_->mutable_gpu_data()));//复制数据矩阵
 					}
 					break;
 				case Caffe::CPU:
 					if (copy_diff) {
 						caffe_copy(count_, source.cpu_diff(),
-								static_cast<Dtype*>(diff_->mutable_cpu_data()));
+								static_cast<Dtype*>(diff_->mutable_cpu_data()));//复制差异矩阵
 					} else {
 						caffe_copy(count_, source.cpu_data(),
-								static_cast<Dtype*>(data_->mutable_cpu_data()));
+								static_cast<Dtype*>(data_->mutable_cpu_data()));//复制数据矩阵
 					}
 					break;
 				default:
@@ -464,7 +464,7 @@ namespace caffe {
 
 	template <typename Dtype>
 		void Blob<Dtype>::FromProto(const BlobProto& proto, bool reshape) {
-			if (reshape) {
+			if (reshape) {//更新维度信息
 				vector<int> shape;
 				if (proto.has_num() || proto.has_channels() ||
 						proto.has_height() || proto.has_width()) {
@@ -486,6 +486,7 @@ namespace caffe {
 				CHECK(ShapeEquals(proto)) << "shape mismatch (reshape not set)";
 			}
 			// copy data
+			// 复制数据矩阵
 			Dtype* data_vec = mutable_cpu_data();
 			if (proto.double_data_size() > 0) {
 				CHECK_EQ(count_, proto.double_data_size());
@@ -498,6 +499,7 @@ namespace caffe {
 					data_vec[i] = proto.data(i);
 				}
 			}
+			//复制差异矩阵
 			if (proto.double_diff_size() > 0) {
 				CHECK_EQ(count_, proto.double_diff_size());
 				Dtype* diff_vec = mutable_cpu_diff();
@@ -514,7 +516,7 @@ namespace caffe {
 		}
 
 	template <>
-		void Blob<double>::ToProto(BlobProto* proto, bool write_diff) const {
+		void Blob<double>::ToProto(BlobProto* proto, bool write_diff) const {//同float的
 			proto->clear_shape();
 			for (int i = 0; i < shape_.size(); ++i) {
 				proto->mutable_shape()->add_dim(shape_[i]);
@@ -535,20 +537,21 @@ namespace caffe {
 
 	template <>
 		void Blob<float>::ToProto(BlobProto* proto, bool write_diff) const {
+			//先清空
 			proto->clear_shape();
-			for (int i = 0; i < shape_.size(); ++i) {
+			for (int i = 0; i < shape_.size(); ++i) {//设置维度信息
 				proto->mutable_shape()->add_dim(shape_[i]);
 			}
 			proto->clear_data();
 			proto->clear_diff();
 			const float* data_vec = cpu_data();
 			for (int i = 0; i < count_; ++i) {
-				proto->add_data(data_vec[i]);
+				proto->add_data(data_vec[i]);//设置数据矩阵
 			}
 			if (write_diff) {
 				const float* diff_vec = cpu_diff();
 				for (int i = 0; i < count_; ++i) {
-					proto->add_diff(diff_vec[i]);
+					proto->add_diff(diff_vec[i]);//设置差异矩阵
 				}
 			}
 		}
