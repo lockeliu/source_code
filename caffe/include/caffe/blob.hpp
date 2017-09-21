@@ -9,7 +9,7 @@
 #include "caffe/proto/caffe.pb.h"
 #include "caffe/syncedmem.hpp"
 
-const int kMaxBlobAxes = 32;//最大的维度
+const int kMaxBlobAxes = 32;//最大的维度，维度数不能超过这个
 
 namespace caffe {
 
@@ -24,16 +24,16 @@ namespace caffe {
 				  class Blob {
 					  public:
 						  Blob()
-							  : data_(), diff_(), count_(0), capacity_(0) {}
+							  : data_(), diff_(), count_(0), capacity_(0) {}//初始化一个空的blob
 
 						  /// @brief Deprecated; use <code>Blob(const vector<int>& shape)</code>.
 						  explicit Blob(const int num, const int channels, const int height,
-								  const int width);
-						  explicit Blob(const vector<int>& shape);
+								  const int width);//初始化四个维度的blob，这个是最常用的
+						  explicit Blob(const vector<int>& shape);//用vector来初始化blob，可以N个维度
 
 						  /// @brief Deprecated; use <code>Reshape(const vector<int>& shape)</code>.
 						  void Reshape(const int num, const int channels, const int height,
-								  const int width);
+								  const int width);//真正的初始化在这里
 						  /**
 						   * @brief Change the dimensions of the blob, allocating new memory if
 						   *        necessary.
@@ -51,7 +51,7 @@ namespace caffe {
 						  void Reshape(const vector<int>& shape);
 						  void Reshape(const BlobShape& shape);
 						  void ReshapeLike(const Blob& other);
-						  inline string shape_string() const {
+						  inline string shape_string() const {//返回维度信息
 							  ostringstream stream;
 							  for (int i = 0; i < shape_.size(); ++i) {
 								  stream << shape_[i] << " ";
@@ -59,7 +59,7 @@ namespace caffe {
 							  stream << "(" << count_ << ")";
 							  return stream.str();
 						  }
-						  inline const vector<int>& shape() const { return shape_; }
+						  inline const vector<int>& shape() const { return shape_; }//返回维度信息
 						  /**
 						   * @brief Returns the dimension of the index-th axis (or the negative index-th
 						   *        axis from the end, if index is negative).
@@ -71,8 +71,8 @@ namespace caffe {
 						  inline int shape(int index) const {
 							  return shape_[CanonicalAxisIndex(index)];
 						  }
-						  inline int num_axes() const { return shape_.size(); }
-						  inline int count() const { return count_; }
+						  inline int num_axes() const { return shape_.size(); }//返回维度数
+						  inline int count() const { return count_; }//返回目前存储的数量
 
 						  /**
 						   * @brief Compute the volume of a slice; i.e., the product of dimensions
@@ -115,7 +115,7 @@ namespace caffe {
 						   *        the second to last if index == -2, etc.
 						   *        Dies on out of range index.
 						   */
-						  inline int CanonicalAxisIndex(int axis_index) const {
+						  inline int CanonicalAxisIndex(int axis_index) const {//支持-1，这种维度
 							  CHECK_GE(axis_index, -num_axes())
 								  << "axis " << axis_index << " out of range for " << num_axes()
 								  << "-D Blob with shape " << shape_string();

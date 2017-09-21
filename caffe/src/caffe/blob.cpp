@@ -21,23 +21,23 @@ namespace caffe {
 
 	template <typename Dtype>
 		void Blob<Dtype>::Reshape(const vector<int>& shape) {
-			CHECK_LE(shape.size(), kMaxBlobAxes);
+			CHECK_LE(shape.size(), kMaxBlobAxes);//维度数要小于等于最大值
 			count_ = 1;
-			shape_.resize(shape.size());
-			if (!shape_data_ || shape_data_->size() < shape.size() * sizeof(int)) {
+			shape_.resize(shape.size());//存储各个维度的容量的
+			if (!shape_data_ || shape_data_->size() < shape.size() * sizeof(int)) {//如果shape_data不存在，或者本身size比需要的小，需要重新申请
 				shape_data_.reset(new SyncedMemory(shape.size() * sizeof(int)));
 			}
 			int* shape_data = static_cast<int*>(shape_data_->mutable_cpu_data());
 			for (int i = 0; i < shape.size(); ++i) {
-				CHECK_GE(shape[i], 0);
-				if (count_ != 0) {
+				CHECK_GE(shape[i], 0);//大于等于0
+				if (count_ != 0) {//不能大于int32
 					CHECK_LE(shape[i], INT_MAX / count_) << "blob size exceeds INT_MAX";
 				}
-				count_ *= shape[i];
-				shape_[i] = shape[i];
-				shape_data[i] = shape[i];
+				count_ *= shape[i];//统计存储数量
+				shape_[i] = shape[i];//记录维度信息
+				shape_data[i] = shape[i];//记录维度信息
 			}
-			if (count_ > capacity_) {
+			if (count_ > capacity_) {//如果当前需要的存储数量比容量还大，重新申请内存
 				capacity_ = count_;
 				data_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));
 				diff_.reset(new SyncedMemory(capacity_ * sizeof(Dtype)));
