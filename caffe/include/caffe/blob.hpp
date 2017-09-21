@@ -151,7 +151,7 @@ namespace caffe {
 				      }
 
 				      inline int offset(const int n, const int c = 0, const int h = 0,
-						      const int w = 0) const {//计算数据的偏移量，感觉有点问题，应该是(((n*num() + c)*channels() + h) *height() + w ) * width
+						      const int w = 0) const {//计算数据的偏移量
 					      CHECK_GE(n, 0);
 					      CHECK_LE(n, num());
 					      CHECK_GE(channels(), 0);
