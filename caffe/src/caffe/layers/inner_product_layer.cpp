@@ -30,7 +30,7 @@ namespace caffe {
 				}
 				// Initialize the weights
 				vector<int> weight_shape(2);
-				if (transpose_) {
+				if (transpose_) {//这种是不需要转置
 					weight_shape[0] = K_;
 					weight_shape[1] = N_;
 				} else {
@@ -41,17 +41,17 @@ namespace caffe {
 				// fill the weights
 				shared_ptr<Filler<Dtype> > weight_filler(GetFiller<Dtype>(
 							this->layer_param_.inner_product_param().weight_filler()));
-				weight_filler->Fill(this->blobs_[0].get());
+				weight_filler->Fill(this->blobs_[0].get());//设置w的权重
 				// If necessary, intiialize and fill the bias term
 				if (bias_term_) {
 					vector<int> bias_shape(1, N_);
 					this->blobs_[1].reset(new Blob<Dtype>(bias_shape));
 					shared_ptr<Filler<Dtype> > bias_filler(GetFiller<Dtype>(
 								this->layer_param_.inner_product_param().bias_filler()));
-					bias_filler->Fill(this->blobs_[1].get());
+					bias_filler->Fill(this->blobs_[1].get());//设置b的权重
 				}
 			}  // parameter initialization
-			this->param_propagate_down_.resize(this->blobs_.size(), true);
+			this->param_propagate_down_.resize(this->blobs_.size(), true);//是否反向传播resize
 		}
 
 	template <typename Dtype>
@@ -60,19 +60,19 @@ namespace caffe {
 			// Figure out the dimensions
 			const int axis = bottom[0]->CanonicalAxisIndex(
 					this->layer_param_.inner_product_param().axis());
-			const int new_K = bottom[0]->count(axis);
+			const int new_K = bottom[0]->count(axis);//输出为K
 			CHECK_EQ(K_, new_K)
 				<< "Input size incompatible with inner product parameters.";
 			// The first "axis" dimensions are independent inner products; the total
 			// number of these is M_, the product over these dimensions.
-			M_ = bottom[0]->count(0, axis);
+			M_ = bottom[0]->count(0, axis);//有M_张图片
 			// The top shape will be the bottom shape with the flattened axes dropped,
 			// and replaced by a single axis with dimension num_output (N_).
 			vector<int> top_shape = bottom[0]->shape();
 			top_shape.resize(axis + 1);
 			top_shape[axis] = N_;
 			top[0]->Reshape(top_shape);
-			// Set up the bias multiplier
+			// Set up the bias multiplier；
 			if (bias_term_) {
 				vector<int> bias_shape(1, M_);
 				bias_multiplier_.Reshape(bias_shape);
@@ -87,12 +87,13 @@ namespace caffe {
 			Dtype* top_data = top[0]->mutable_cpu_data();
 			const Dtype* weight = this->blobs_[0]->cpu_data();
 			caffe_cpu_gemm<Dtype>(CblasNoTrans, transpose_ ? CblasNoTrans : CblasTrans,
-					M_, N_, K_, (Dtype)1.,
-					bottom_data, weight, (Dtype)0., top_data);
+					M_, N_, K_,
+					(Dtype)1.,bottom_data, weight,
+					(Dtype)0., top_data);
 			if (bias_term_) {
-				caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, M_, N_, 1, (Dtype)1.,
-						bias_multiplier_.cpu_data(),
-						this->blobs_[1]->cpu_data(), (Dtype)1., top_data);
+				caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, M_, N_, 1,
+						(Dtype)1., bias_multiplier_.cpu_data(),this->blobs_[1]->cpu_data(), 
+						(Dtype)1., top_data);
 			}
 		}
 
