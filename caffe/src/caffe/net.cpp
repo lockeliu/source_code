@@ -20,34 +20,34 @@
 namespace caffe {
 
 	template <typename Dtype>
-		Net<Dtype>::Net(const NetParameter& param) {
+		Net<Dtype>::Net(const NetParameter& param) {//用net配置初始化一个网络结构
 			Init(param);
 		}
 
 	template <typename Dtype>
 		Net<Dtype>::Net(const string& param_file, Phase phase,
-				const int level, const vector<string>* stages) {
+				const int level, const vector<string>* stages) {//用配置文件初始化一个网络结构
 			NetParameter param;
-			ReadNetParamsFromTextFileOrDie(param_file, &param);
+			ReadNetParamsFromTextFileOrDie(param_file, &param);//读入一个配置文件
 			// Set phase, stages and level
-			param.mutable_state()->set_phase(phase);
+			param.mutable_state()->set_phase(phase);//设置网络结构的模式
 			if (stages != NULL) {
 				for (int i = 0; i < stages->size(); i++) {
 					param.mutable_state()->add_stage((*stages)[i]);
 				}
 			}
-			param.mutable_state()->set_level(level);
+			param.mutable_state()->set_level(level);//设置网络的级别
 			Init(param);
 		}
 
 	template <typename Dtype>
 		void Net<Dtype>::Init(const NetParameter& in_param) {
 			// Set phase from the state.
-			phase_ = in_param.state().phase();
+			phase_ = in_param.state().phase();//网络结构的模式，train or test
 			// Filter layers based on their include/exclude rules and
 			// the current NetState.
 			NetParameter filtered_param;
-			FilterNet(in_param, &filtered_param);
+			FilterNet(in_param, &filtered_param);//过滤
 			LOG_IF(INFO, Caffe::root_solver())
 				<< "Initializing net from parameters: " << std::endl
 				<< filtered_param.DebugString();
@@ -257,30 +257,30 @@ namespace caffe {
 
 	template <typename Dtype>
 		void Net<Dtype>::FilterNet(const NetParameter& param,
-				NetParameter* param_filtered) {
+				NetParameter* param_filtered) {//根据网络规则过滤一些层
 			NetState net_state(param.state());
-			param_filtered->CopyFrom(param);
-			param_filtered->clear_layer();
-			for (int i = 0; i < param.layer_size(); ++i) {
+			param_filtered->CopyFrom(param);//copy 原本的net配置
+			param_filtered->clear_layer();//清空所有的层
+			for (int i = 0; i < param.layer_size(); ++i) {//遍历所有的层
 				const LayerParameter& layer_param = param.layer(i);
-				const string& layer_name = layer_param.name();
+				const string& layer_name = layer_param.name();//该层名字
 				CHECK(layer_param.include_size() == 0 || layer_param.exclude_size() == 0)
 					<< "Specify either include rules or exclude rules; not both.";
 				// If no include rules are specified, the layer is included by default and
 				// only excluded if it meets one of the exclude rules.
-				bool layer_included = (layer_param.include_size() == 0);
-				for (int j = 0; layer_included && j < layer_param.exclude_size(); ++j) {
-					if (StateMeetsRule(net_state, layer_param.exclude(j), layer_name)) {
+				bool layer_included = (layer_param.include_size() == 0);//如果等于0，直接通过选用
+				for (int j = 0; layer_included && j < layer_param.exclude_size(); ++j) {//查看排除条件
+					if (StateMeetsRule(net_state, layer_param.exclude(j), layer_name)) {//如果符合，直接pass
 						layer_included = false;
 					}
 				}
-				for (int j = 0; !layer_included && j < layer_param.include_size(); ++j) {
-					if (StateMeetsRule(net_state, layer_param.include(j), layer_name)) {
+				for (int j = 0; !layer_included && j < layer_param.include_size(); ++j) {//查看包含条件
+					if (StateMeetsRule(net_state, layer_param.include(j), layer_name)) {//如果符合，直接选用
 						layer_included = true;
 					}
 				}
-				if (layer_included) {
-					param_filtered->add_layer()->CopyFrom(layer_param);
+				if (layer_included) {//通过过滤条件
+					param_filtered->add_layer()->CopyFrom(layer_param);//添加入新网络结构
 				}
 			}
 		}
@@ -288,9 +288,10 @@ namespace caffe {
 	template <typename Dtype>
 		bool Net<Dtype>::StateMeetsRule(const NetState& state,
 				const NetStateRule& rule, const string& layer_name) {
+			//只要relu是空，就全部是通过了
 			// Check whether the rule is broken due to phase.
-			if (rule.has_phase()) {
-				if (rule.phase() != state.phase()) {
+			if (rule.has_phase()) {//如果rule有phase，才判断
+				if (rule.phase() != state.phase()) {//如果不相等直接返回false
 					LOG_IF(INFO, Caffe::root_solver())
 						<< "The NetState phase (" << state.phase()
 						<< ") differed from the phase (" << rule.phase()
@@ -299,7 +300,7 @@ namespace caffe {
 				}
 			}
 			// Check whether the rule is broken due to min level.
-			if (rule.has_min_level()) {
+			if (rule.has_min_level()) {//如果有min_level，才判断
 				if (state.level() < rule.min_level()) {
 					LOG_IF(INFO, Caffe::root_solver())
 						<< "The NetState level (" << state.level()
@@ -309,7 +310,7 @@ namespace caffe {
 				}
 			}
 			// Check whether the rule is broken due to max level.
-			if (rule.has_max_level()) {
+			if (rule.has_max_level()) {//如果有max_level，才判断
 				if (state.level() > rule.max_level()) {
 					LOG_IF(INFO, Caffe::root_solver())
 						<< "The NetState level (" << state.level()
@@ -324,7 +325,7 @@ namespace caffe {
 				// Check that the NetState contains the rule's ith stage.
 				bool has_stage = false;
 				for (int j = 0; !has_stage && j < state.stage_size(); ++j) {
-					if (rule.stage(i) == state.stage(j)) { has_stage = true; }
+					if (rule.stage(i) == state.stage(j)) { has_stage = true; }//如果有一个条件符合，就true
 				}
 				if (!has_stage) {
 					LOG_IF(INFO, Caffe::root_solver())
@@ -339,7 +340,7 @@ namespace caffe {
 				// Check that the NetState contains the rule's ith not_stage.
 				bool has_stage = false;
 				for (int j = 0; !has_stage && j < state.stage_size(); ++j) {
-					if (rule.not_stage(i) == state.stage(j)) { has_stage = true; }
+					if (rule.not_stage(i) == state.stage(j)) { has_stage = true; }//如果有一个条件不符合就false
 				}
 				if (has_stage) {
 					LOG_IF(INFO, Caffe::root_solver())
@@ -348,6 +349,7 @@ namespace caffe {
 					return false;
 				}
 			}
+			//最终才true
 			return true;
 		}
 

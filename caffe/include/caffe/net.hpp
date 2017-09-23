@@ -23,19 +23,19 @@ namespace caffe {
 	template <typename Dtype>
 		      class Net {
 			      public:
-				      explicit Net(const NetParameter& param);
+				      explicit Net(const NetParameter& param);//用net配置初始化网络结构
 				      explicit Net(const string& param_file, Phase phase,
-						      const int level = 0, const vector<string>* stages = NULL);
-				      virtual ~Net() {}
+						      const int level = 0, const vector<string>* stages = NULL);//用配置文件初始化网络结构
+				      virtual ~Net() {}//虚构函数
 
 				      /// @brief Initialize a network with a NetParameter.
-				      void Init(const NetParameter& param);
+				      void Init(const NetParameter& param);//初始化一个网络结构
 
 				      /**
 				       * @brief Run Forward and return the result.
 				       *
 				       */
-				      const vector<Blob<Dtype>*>& Forward(Dtype* loss = NULL);
+				      const vector<Blob<Dtype>*>& Forward(Dtype* loss = NULL);//前向传播
 				      /// @brief DEPRECATED; use Forward() instead.
 				      const vector<Blob<Dtype>*>& ForwardPrefilled(Dtype* loss = NULL) {
 					      LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
@@ -51,28 +51,28 @@ namespace caffe {
 				       * the middle may be incorrect if all of the layers of a fan-in are not
 				       * included.
 				       */
-				      Dtype ForwardFromTo(int start, int end);
-				      Dtype ForwardFrom(int start);
-				      Dtype ForwardTo(int end);
+				      Dtype ForwardFromTo(int start, int end);//从start开始到end结束，前向传播
+				      Dtype ForwardFrom(int start);//从start开始，前向传播
+				      Dtype ForwardTo(int end);//前向传播到end结束
 				      /// @brief DEPRECATED; set input blobs then use Forward() instead.
 				      const vector<Blob<Dtype>*>& Forward(const vector<Blob<Dtype>* > & bottom,
-						      Dtype* loss = NULL);
+						      Dtype* loss = NULL);//前向传播
 
 				      /**
 				       * @brief Zeroes out the diffs of all net parameters.
 				       *        Should be run before Backward.
 				       */
-				      void ClearParamDiffs();
+				      void ClearParamDiffs();//清空所有差异矩阵
 
 				      /**
 				       * The network backward should take no input and output, since it solely
 				       * computes the gradient w.r.t the parameters, and the data has already been
 				       * provided during the forward pass.
 				       */
-				      void Backward();
-				      void BackwardFromTo(int start, int end);
-				      void BackwardFrom(int start);
-				      void BackwardTo(int end);
+				      void Backward();//反向传播
+				      void BackwardFromTo(int start, int end);//从start到end，反向传播
+				      void BackwardFrom(int start);//从start开始反向传播
+				      void BackwardTo(int end);//反向传播到end
 
 				      /**
 				       * @brief Reshape all layers from bottom to top.
@@ -82,15 +82,15 @@ namespace caffe {
 				       */
 				      void Reshape();
 
-				      Dtype ForwardBackward() {
+				      Dtype ForwardBackward() {//进行一次前向传播，接着一次反向传播
 					      Dtype loss;
-					      Forward(&loss);
-					      Backward();
+					      Forward(&loss);//前向传播
+					      Backward();//反向传播
 					      return loss;
 				      }
 
 				      /// @brief Updates the network weights based on the diff values computed.
-				      void Update();
+				      void Update();//把差异矩阵更新到数据矩阵
 				      /**
 				       * @brief Shares weight data of owner blobs with shared blobs.
 				       *
