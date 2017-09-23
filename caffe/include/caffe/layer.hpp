@@ -37,14 +37,14 @@ namespace caffe {
 				 * to SetUp(), where the dimensions of the bottom blobs are provided to the
 				 * layer.
 				 */
-				explicit Layer(const LayerParameter& param)
+				explicit Layer(const LayerParameter& param)//初始化一个层的基类
 					: layer_param_(param) {
 						// Set phase and copy blobs (if there are any).
 						phase_ = param.phase();//模式
 						if (layer_param_.blobs_size() > 0) {
 							blobs_.resize(layer_param_.blobs_size());
 							for (int i = 0; i < layer_param_.blobs_size(); ++i) {
-								blobs_[i].reset(new Blob<Dtype>());//设置训练的参数
+								blobs_[i].reset(new Blob<Dtype>());//设置空训练的参数
 								blobs_[i]->FromProto(layer_param_.blobs(i));//从pb导入
 							}
 						}
@@ -65,11 +65,11 @@ namespace caffe {
 				 * This method may not be overridden.
 				 */
 				void SetUp(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top) {
-					CheckBlobCounts(bottom, top);
-					LayerSetUp(bottom, top);
-					Reshape(bottom, top);
-					SetLossWeights(top);
+						const vector<Blob<Dtype>*>& top) {//相当于初始化环境吧
+					CheckBlobCounts(bottom, top);//检查输入输出是否符合该层
+					LayerSetUp(bottom, top);//申请训练参数的内存，随机设置，高斯方式
+					Reshape(bottom, top);//申请输出参数的内存
+					SetLossWeights(top);//设置各个参数损失权重
 				}
 
 				/**
@@ -89,7 +89,7 @@ namespace caffe {
 				 * adjust the top blob sizes.
 				 */
 				virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top) {}
+						const vector<Blob<Dtype>*>& top) {}//申请训练参数的内存
 
 				/**
 				 * @brief Adjust the shapes of top blobs and internal buffers to accommodate
@@ -104,7 +104,7 @@ namespace caffe {
 				 * accommodate the bottom blobs.
 				 */
 				virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top) = 0;
+						const vector<Blob<Dtype>*>& top) = 0;//申请输出参数的内存
 
 				/**
 				 * @brief Given the bottom blobs, compute the top blobs and the loss.
@@ -124,7 +124,7 @@ namespace caffe {
 				 * Your layer should implement Forward_cpu and (optionally) Forward_gpu.
 				 */
 				inline Dtype Forward(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top);
+						const vector<Blob<Dtype>*>& top);//前向传播
 
 				/**
 				 * @brief Given the top blob error gradients, compute the bottom blob error
@@ -149,36 +149,36 @@ namespace caffe {
 				 */
 				inline void Backward(const vector<Blob<Dtype>*>& top,
 						const vector<bool>& propagate_down,
-						const vector<Blob<Dtype>*>& bottom);
+						const vector<Blob<Dtype>*>& bottom);//反向传播
 
 				/**
 				 * @brief Returns the vector of learnable parameter blobs.
 				 */
-				vector<shared_ptr<Blob<Dtype> > >& blobs() {
+				vector<shared_ptr<Blob<Dtype> > >& blobs() {//返回训练参数
 					return blobs_;
 				}
 
 				/**
 				 * @brief Returns the layer parameter.
 				 */
-				const LayerParameter& layer_param() const { return layer_param_; }
+				const LayerParameter& layer_param() const { return layer_param_; }//返回该层的配置
 
 				/**
 				 * @brief Writes the layer parameter to a protocol buffer
 				 */
-				virtual void ToProto(LayerParameter* param, bool write_diff = false);
+				virtual void ToProto(LayerParameter* param, bool write_diff = false);//序列化成pb
 
 				/**
 				 * @brief Returns the scalar loss associated with a top blob at a given index.
 				 */
-				inline Dtype loss(const int top_index) const {
+				inline Dtype loss(const int top_index) const {//返回这个参数的损失权重
 					return (loss_.size() > top_index) ? loss_[top_index] : Dtype(0);
 				}
 
 				/**
 				 * @brief Sets the loss associated with a top blob at a given index.
 				 */
-				inline void set_loss(const int top_index, const Dtype value) {
+				inline void set_loss(const int top_index, const Dtype value) {//设置这个参数的损失权重
 					if (loss_.size() <= top_index) {
 						loss_.resize(top_index + 1, Dtype(0));
 					}
@@ -188,7 +188,7 @@ namespace caffe {
 				/**
 				 * @brief Returns the layer type.
 				 */
-				virtual inline const char* type() const { return ""; }
+				virtual inline const char* type() const { return ""; }//返回该层的类型
 
 				/**
 				 * @brief Returns the exact number of bottom blobs required by the layer,
@@ -197,7 +197,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some exact number of bottom blobs.
 				 */
-				virtual inline int ExactNumBottomBlobs() const { return -1; }
+				virtual inline int ExactNumBottomBlobs() const { return -1; }//返回输入的确切层数
 				/**
 				 * @brief Returns the minimum number of bottom blobs required by the layer,
 				 *        or -1 if no minimum number is required.
@@ -205,7 +205,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some minimum number of bottom blobs.
 				 */
-				virtual inline int MinBottomBlobs() const { return -1; }
+				virtual inline int MinBottomBlobs() const { return -1; }//返回输入的最小层数
 				/**
 				 * @brief Returns the maximum number of bottom blobs required by the layer,
 				 *        or -1 if no maximum number is required.
@@ -213,7 +213,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some maximum number of bottom blobs.
 				 */
-				virtual inline int MaxBottomBlobs() const { return -1; }
+				virtual inline int MaxBottomBlobs() const { return -1; }//返回输入的最大层数
 				/**
 				 * @brief Returns the exact number of top blobs required by the layer,
 				 *        or -1 if no exact number is required.
@@ -221,7 +221,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some exact number of top blobs.
 				 */
-				virtual inline int ExactNumTopBlobs() const { return -1; }
+				virtual inline int ExactNumTopBlobs() const { return -1; }//返回输出的确切层数
 				/**
 				 * @brief Returns the minimum number of top blobs required by the layer,
 				 *        or -1 if no minimum number is required.
@@ -229,7 +229,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some minimum number of top blobs.
 				 */
-				virtual inline int MinTopBlobs() const { return -1; }
+				virtual inline int MinTopBlobs() const { return -1; }//返回输出的最小层数
 				/**
 				 * @brief Returns the maximum number of top blobs required by the layer,
 				 *        or -1 if no maximum number is required.
@@ -237,7 +237,7 @@ namespace caffe {
 				 * This method should be overridden to return a non-negative value if your
 				 * layer expects some maximum number of top blobs.
 				 */
-				virtual inline int MaxTopBlobs() const { return -1; }
+				virtual inline int MaxTopBlobs() const { return -1; }//返回输出的最大层数
 				/**
 				 * @brief Returns true if the layer requires an equal number of bottom and
 				 *        top blobs.
@@ -245,7 +245,7 @@ namespace caffe {
 				 * This method should be overridden to return true if your layer expects an
 				 * equal number of bottom and top blobs.
 				 */
-				virtual inline bool EqualNumBottomTopBlobs() const { return false; }
+				virtual inline bool EqualNumBottomTopBlobs() const { return false; }//返回输入输出是否相等
 
 				/**
 				 * @brief Return whether "anonymous" top blobs are created automatically
@@ -255,7 +255,7 @@ namespace caffe {
 				 * blobs to fulfill the requirement specified by ExactNumTopBlobs() or
 				 * MinTopBlobs().
 				 */
-				virtual inline bool AutoTopBlobs() const { return false; }
+				virtual inline bool AutoTopBlobs() const { return false; }//是否任意输出
 
 				/**
 				 * @brief Return whether to allow force_backward for a given bottom blob
@@ -265,7 +265,7 @@ namespace caffe {
 				 * setting and backpropagate to blob i only if it needs gradient information
 				 * (as is done when force_backward == false).
 				 */
-				virtual inline bool AllowForceBackward(const int bottom_index) const {
+				virtual inline bool AllowForceBackward(const int bottom_index) const {//是否允许反向传播
 					return true;
 				}
 
@@ -276,7 +276,7 @@ namespace caffe {
 				 * You can safely ignore false values and always compute gradients
 				 * for all parameters, but possibly with wasteful computation.
 				 */
-				inline bool param_propagate_down(const int param_id) {
+				inline bool param_propagate_down(const int param_id) {//某个参数是否反向传播
 					return (param_propagate_down_.size() > param_id) ?
 						param_propagate_down_[param_id] : false;
 				}
@@ -284,7 +284,7 @@ namespace caffe {
 				 * @brief Sets whether the layer should compute gradients w.r.t. a
 				 *        parameter at a particular index given by param_id.
 				 */
-				inline void set_param_propagate_down(const int param_id, const bool value) {
+				inline void set_param_propagate_down(const int param_id, const bool value) {//设置某一个参数是否反向传播
 					if (param_propagate_down_.size() <= param_id) {
 						param_propagate_down_.resize(param_id + 1, true);
 					}
@@ -294,21 +294,21 @@ namespace caffe {
 
 			protected:
 				/** The protobuf that stores the layer parameters */
-				LayerParameter layer_param_;
+				LayerParameter layer_param_;//该层的参数配置
 				/** The phase: TRAIN or TEST */
-				Phase phase_;
+				Phase phase_;//模式
 				/** The vector that stores the learnable parameters as a set of blobs. */
-				vector<shared_ptr<Blob<Dtype> > > blobs_;
+				vector<shared_ptr<Blob<Dtype> > > blobs_;//该层训练的参数
 				/** Vector indicating whether to compute the diff of each param blob. */
-				vector<bool> param_propagate_down_;
+				vector<bool> param_propagate_down_;//是否反向传播
 
 				/** The vector that indicates whether each top blob has a non-zero weight in
 				 *  the objective function. */
-				vector<Dtype> loss_;
+				vector<Dtype> loss_;//损失权重
 
 				/** @brief Using the CPU device, compute the layer output. */
 				virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top) = 0;
+						const vector<Blob<Dtype>*>& top) = 0;//cpu侧的前向传播
 				/**
 				 * @brief Using the GPU device, compute the layer output.
 				 *        Fall back to Forward_cpu() if unavailable.
@@ -325,7 +325,7 @@ namespace caffe {
 				 */
 				virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
 						const vector<bool>& propagate_down,
-						const vector<Blob<Dtype>*>& bottom) = 0;
+						const vector<Blob<Dtype>*>& bottom) = 0;//cpu的反向传播
 				/**
 				 * @brief Using the GPU device, compute the gradients for any parameters and
 				 *        for the bottom blobs if propagate_down is true.
@@ -344,7 +344,7 @@ namespace caffe {
 				 * the {ExactNum,Min,Max}{Bottom,Top}Blobs() functions.
 				 */
 				virtual void CheckBlobCounts(const vector<Blob<Dtype>*>& bottom,
-						const vector<Blob<Dtype>*>& top) {
+						const vector<Blob<Dtype>*>& top) {//检查该层的输入输出
 					if (ExactNumBottomBlobs() >= 0) {//如果该层有确切数字
 						CHECK_EQ(ExactNumBottomBlobs(), bottom.size())//那么bottom需要相等
 							<< type() << " Layer takes " << ExactNumBottomBlobs()
@@ -386,8 +386,8 @@ namespace caffe {
 				 * Called by SetUp to initialize the weights associated with any top blobs in
 				 * the loss function. Store non-zero loss weights in the diff blob.
 				 */
-				inline void SetLossWeights(const vector<Blob<Dtype>*>& top) {
-					const int num_loss_weights = layer_param_.loss_weight_size();
+				inline void SetLossWeights(const vector<Blob<Dtype>*>& top) {//设置损失的权重
+					const int num_loss_weights = layer_param_.loss_weight_size();//损失权重个数
 					if (num_loss_weights) {
 						CHECK_EQ(top.size(), num_loss_weights) << "loss_weight must be "
 							"unspecified or specified once per top blob.";
@@ -396,7 +396,7 @@ namespace caffe {
 							if (loss_weight == Dtype(0)) { continue; }
 							this->set_loss(top_id, loss_weight);
 							const int count = top[top_id]->count();
-							Dtype* loss_multiplier = top[top_id]->mutable_cpu_diff();
+							Dtype* loss_multiplier = top[top_id]->mutable_cpu_diff();//设置到差异矩阵中
 							caffe_set(count, loss_weight, loss_multiplier);
 						}
 					}
@@ -411,13 +411,13 @@ namespace caffe {
 	// functions.
 	template <typename Dtype>
 		inline Dtype Layer<Dtype>::Forward(const vector<Blob<Dtype>*>& bottom,
-				const vector<Blob<Dtype>*>& top) {
+				const vector<Blob<Dtype>*>& top) {//前向传播
 			Dtype loss = 0;
 			Reshape(bottom, top);
 			switch (Caffe::mode()) {
 				case Caffe::CPU:
 					Forward_cpu(bottom, top);
-					for (int top_id = 0; top_id < top.size(); ++top_id) {
+					for (int top_id = 0; top_id < top.size(); ++top_id) {//累计每个top的loss
 						if (!this->loss(top_id)) { continue; }
 						const int count = top[top_id]->count();
 						const Dtype* data = top[top_id]->cpu_data();
@@ -448,7 +448,7 @@ namespace caffe {
 	template <typename Dtype>
 		inline void Layer<Dtype>::Backward(const vector<Blob<Dtype>*>& top,
 				const vector<bool>& propagate_down,
-				const vector<Blob<Dtype>*>& bottom) {
+				const vector<Blob<Dtype>*>& bottom) {//反向传播
 			switch (Caffe::mode()) {
 				case Caffe::CPU:
 					Backward_cpu(top, propagate_down, bottom);
@@ -463,12 +463,12 @@ namespace caffe {
 
 	// Serialize LayerParameter to protocol buffer
 	template <typename Dtype>
-		void Layer<Dtype>::ToProto(LayerParameter* param, bool write_diff) {
+		void Layer<Dtype>::ToProto(LayerParameter* param, bool write_diff) {//序列化成pb
 			param->Clear();
-			param->CopyFrom(layer_param_);
+			param->CopyFrom(layer_param_);//直接copy
 			param->clear_blobs();
 			for (int i = 0; i < blobs_.size(); ++i) {
-				blobs_[i]->ToProto(param->add_blobs(), write_diff);
+				blobs_[i]->ToProto(param->add_blobs(), write_diff);//设置参数
 			}
 		}
 
