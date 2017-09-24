@@ -11,8 +11,8 @@ namespace caffe {
 
 	void InsertSplits(const NetParameter& param, NetParameter* param_split) {
 		// Initialize by copying from the input NetParameter.
-		param_split->CopyFrom(param);
-		param_split->clear_layer();
+		param_split->CopyFrom(param);//copy一份配置
+		param_split->clear_layer();//清空所有的层
 		map<string, pair<int, int> > blob_name_to_last_top_idx;
 		map<pair<int, int>, pair<int, int> > bottom_idx_to_source_top_idx;
 		map<pair<int, int>, int> top_idx_to_bottom_count;

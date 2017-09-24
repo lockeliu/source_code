@@ -57,17 +57,17 @@ namespace caffe {
 
 			// Basically, build all the layers and set up their connections.
 			name_ = param.name();//网络的名字
-			map<string, int> blob_name_to_idx;//
-			set<string> available_blobs;
+			map<string, int> blob_name_to_idx;//参数和索引的对应关系
+			set<string> available_blobs;//是否是可用的参数
 			memory_used_ = 0;
 
 			// For each layer, set up its input and output
-			bottom_vecs_.resize(param.layer_size());
-			top_vecs_.resize(param.layer_size());
-			bottom_id_vecs_.resize(param.layer_size());
-			param_id_vecs_.resize(param.layer_size());
-			top_id_vecs_.resize(param.layer_size());
-			bottom_need_backward_.resize(param.layer_size());
+			bottom_vecs_.resize(param.layer_size());//bottom 的vector 
+			top_vecs_.resize(param.layer_size());// top的bector
+			bottom_id_vecs_.resize(param.layer_size());//bottom 和索引的对应关系
+			param_id_vecs_.resize(param.layer_size());//参数和索引的对应关系 
+			top_id_vecs_.resize(param.layer_size());//top和索引的对应关系 
+			bottom_need_backward_.resize(param.layer_size());//是否需要反向传播
 
 			for (int layer_id = 0; layer_id < param.layer_size(); ++layer_id) {//循环每一层
 				// Inherit phase from net if unset.
