@@ -47,18 +47,20 @@ namespace caffe {
 			// Filter layers based on their include/exclude rules and
 			// the current NetState.
 			NetParameter filtered_param;
-			FilterNet(in_param, &filtered_param);//过滤
+			FilterNet(in_param, &filtered_param);//根据一些规则过滤网络结构
 			LOG_IF(INFO, Caffe::root_solver())
 				<< "Initializing net from parameters: " << std::endl
 				<< filtered_param.DebugString();
 			// Create a copy of filtered_param with splits added where necessary.
 			NetParameter param;
-			InsertSplits(filtered_param, &param);
+			InsertSplits(filtered_param, &param);//也是一种预处理
+
 			// Basically, build all the layers and set up their connections.
-			name_ = param.name();
-			map<string, int> blob_name_to_idx;
+			name_ = param.name();//网络的名字
+			map<string, int> blob_name_to_idx;//
 			set<string> available_blobs;
 			memory_used_ = 0;
+
 			// For each layer, set up its input and output
 			bottom_vecs_.resize(param.layer_size());
 			top_vecs_.resize(param.layer_size());
@@ -66,33 +68,38 @@ namespace caffe {
 			param_id_vecs_.resize(param.layer_size());
 			top_id_vecs_.resize(param.layer_size());
 			bottom_need_backward_.resize(param.layer_size());
-			for (int layer_id = 0; layer_id < param.layer_size(); ++layer_id) {
+
+			for (int layer_id = 0; layer_id < param.layer_size(); ++layer_id) {//循环每一层
 				// Inherit phase from net if unset.
 				if (!param.layer(layer_id).has_phase()) {
-					param.mutable_layer(layer_id)->set_phase(phase_);
+					param.mutable_layer(layer_id)->set_phase(phase_);//如果这一层没有设置模式参数，把网络的模式参数set进去
 				}
 				// Setup layer.
-				const LayerParameter& layer_param = param.layer(layer_id);
+				const LayerParameter& layer_param = param.layer(layer_id);//从网络配置拿到这一层的层配置
 				if (layer_param.propagate_down_size() > 0) {
-					CHECK_EQ(layer_param.propagate_down_size(),
+					CHECK_EQ(layer_param.propagate_down_size(),//如果有控制反向传播的参数，个数需要和输入参数的个数一致
 							layer_param.bottom_size())
 						<< "propagate_down param must be specified "
 						<< "either 0 or bottom_size times ";
 				}
-				layers_.push_back(LayerRegistry<Dtype>::CreateLayer(layer_param));
-				layer_names_.push_back(layer_param.name());
+
+				layers_.push_back(LayerRegistry<Dtype>::CreateLayer(layer_param));//工厂初始化一个layer，放在vector李曼
+				layer_names_.push_back(layer_param.name());//存该层的名字
+
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Creating Layer " << layer_param.name();
-				bool need_backward = false;
+				bool need_backward = false;//默认不需要反向传播
 
 				// Figure out this layer's input and output
+				// 处理输入层
 				for (int bottom_id = 0; bottom_id < layer_param.bottom_size();
 						++bottom_id) {
 					const int blob_id = AppendBottom(param, layer_id, bottom_id,
 							&available_blobs, &blob_name_to_idx);
 					// If a blob needs backward, this layer should provide it.
-					need_backward |= blob_need_backward_[blob_id];
+					need_backward |= blob_need_backward_[blob_id];//反向传播
 				}
+				//处理输出层
 				int num_top = layer_param.top_size();
 				for (int top_id = 0; top_id < num_top; ++top_id) {
 					AppendTop(param, layer_id, top_id, &available_blobs, &blob_name_to_idx);
@@ -100,7 +107,7 @@ namespace caffe {
 					if (layer_param.type() == "Input") {
 						const int blob_id = blobs_.size() - 1;
 						net_input_blob_indices_.push_back(blob_id);
-						net_input_blobs_.push_back(blobs_[blob_id].get());
+						net_input_blobs_.push_back(blobs_[blob_id].get());//网络的输入数据
 					}
 				}
 				// If the layer specifies that AutoTopBlobs() -> true and the LayerParameter
@@ -117,13 +124,14 @@ namespace caffe {
 						AppendTop(param, layer_id, num_top, NULL, NULL);
 					}
 				}
+
 				// After this layer is connected, set it up.
-				layers_[layer_id]->SetUp(bottom_vecs_[layer_id], top_vecs_[layer_id]);
+				layers_[layer_id]->SetUp(bottom_vecs_[layer_id], top_vecs_[layer_id]);//处理完该层的输入输出之后，初始化该层
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Setting up " << layer_names_[layer_id];
 				for (int top_id = 0; top_id < top_vecs_[layer_id].size(); ++top_id) {
 					if (blob_loss_weights_.size() <= top_id_vecs_[layer_id][top_id]) {
-						blob_loss_weights_.resize(top_id_vecs_[layer_id][top_id] + 1, Dtype(0));
+						blob_loss_weights_.resize(top_id_vecs_[layer_id][top_id] + 1, Dtype(0));//设置loss_weight
 					}
 					blob_loss_weights_[top_id_vecs_[layer_id][top_id]] = layer->loss(top_id);
 					LOG_IF(INFO, Caffe::root_solver())
@@ -147,19 +155,20 @@ namespace caffe {
 					const bool param_need_backward = param_spec->lr_mult() != 0;
 					need_backward |= param_need_backward;
 					layers_[layer_id]->set_param_propagate_down(param_id,
-							param_need_backward);
+							param_need_backward);//设置反向传播参数
 				}
 				for (int param_id = 0; param_id < num_param_blobs; ++param_id) {
-					AppendParam(param, layer_id, param_id);
+					AppendParam(param, layer_id, param_id);//设置每一层权值的一些参数，学习率，正则率，参数id等，其实也是把权重共享给net，感觉没啥必要
 				}
 				// Finally, set the backward flag
 				layer_need_backward_.push_back(need_backward);
 				if (need_backward) {
 					for (int top_id = 0; top_id < top_id_vecs_[layer_id].size(); ++top_id) {
-						blob_need_backward_[top_id_vecs_[layer_id][top_id]] = true;
+						blob_need_backward_[top_id_vecs_[layer_id][top_id]] = true;//是否反向传播
 					}
 				}
-			}
+			}//每一层的循环这里结束
+
 			// Go through the net backwards to determine which blobs contribute to the
 			// loss.  We can skip backward computation for blobs that don't contribute
 			// to the loss.
@@ -400,22 +409,22 @@ namespace caffe {
 				map<string, int>* blob_name_to_idx) {
 			const LayerParameter& layer_param = param.layer(layer_id);
 			const string& blob_name = layer_param.bottom(bottom_id);
-			if (available_blobs->find(blob_name) == available_blobs->end()) {
+			if (available_blobs->find(blob_name) == available_blobs->end()) {//输入层的名字需要在输出层中已经出现过才行的
 				LOG(FATAL) << "Unknown bottom blob '" << blob_name << "' (layer '"
 					<< layer_param.name() << "', bottom index " << bottom_id << ")";
 			}
-			const int blob_id = (*blob_name_to_idx)[blob_name];
+			const int blob_id = (*blob_name_to_idx)[blob_name];//层的名字 索引 到层的id
 			LOG_IF(INFO, Caffe::root_solver())
 				<< layer_names_[layer_id] << " <- " << blob_name;
-			bottom_vecs_[layer_id].push_back(blobs_[blob_id].get());
-			bottom_id_vecs_[layer_id].push_back(blob_id);
-			available_blobs->erase(blob_name);
-			bool need_backward = blob_need_backward_[blob_id];
+			bottom_vecs_[layer_id].push_back(blobs_[blob_id].get());//vector套vector存每一层的输入
+			bottom_id_vecs_[layer_id].push_back(blob_id);//vector套vector套每一层的输入的索引id
+			available_blobs->erase(blob_name);//删除这个层的名字
+			bool need_backward = blob_need_backward_[blob_id];//是否需要反向传播
 			// Check if the backpropagation on bottom_id should be skipped
 			if (layer_param.propagate_down_size() > 0) {
 				need_backward = layer_param.propagate_down(bottom_id);
 			}
-			bottom_need_backward_[layer_id].push_back(need_backward);
+			bottom_need_backward_[layer_id].push_back(need_backward);//是否需要方向传播
 			return blob_id;
 		}
 
@@ -515,19 +524,19 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		Dtype Net<Dtype>::ForwardFromTo(int start, int end) {
+		Dtype Net<Dtype>::ForwardFromTo(int start, int end) {//从start到end，前向传播
 			CHECK_GE(start, 0);
 			CHECK_LT(end, layers_.size());
 			Dtype loss = 0;
 			for (int i = start; i <= end; ++i) {
 				for (int c = 0; c < before_forward_.size(); ++c) {
-					before_forward_[c]->run(i);
+					before_forward_[c]->run(i);//一些callback，可以不管
 				}
-				Dtype layer_loss = layers_[i]->Forward(bottom_vecs_[i], top_vecs_[i]);
+				Dtype layer_loss = layers_[i]->Forward(bottom_vecs_[i], top_vecs_[i]);//对每一层进行前向传播
 				loss += layer_loss;
-				if (debug_info_) { ForwardDebugInfo(i); }
+				if (debug_info_) { ForwardDebugInfo(i); }//打印debug信息而已
 				for (int c = 0; c < after_forward_.size(); ++c) {
-					after_forward_[c]->run(i);
+					after_forward_[c]->run(i);//一些callback，可以不管
 				}
 			}
 			return loss;
@@ -571,30 +580,30 @@ namespace caffe {
 			CHECK_LT(start, layers_.size());
 			for (int i = start; i >= end; --i) {
 				for (int c = 0; c < before_backward_.size(); ++c) {
-					before_backward_[c]->run(i);
+					before_backward_[c]->run(i);//callback
 				}
 				if (layer_need_backward_[i]) {
 					layers_[i]->Backward(
-							top_vecs_[i], bottom_need_backward_[i], bottom_vecs_[i]);
-					if (debug_info_) { BackwardDebugInfo(i); }
+							top_vecs_[i], bottom_need_backward_[i], bottom_vecs_[i]);//反向传播
+					if (debug_info_) { BackwardDebugInfo(i); }//打印debug信息而已
 				}
 				for (int c = 0; c < after_backward_.size(); ++c) {
-					after_backward_[c]->run(i);
+					after_backward_[c]->run(i);//callback
 				}
 			}
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::ForwardDebugInfo(const int layer_id) {
+		void Net<Dtype>::ForwardDebugInfo(const int layer_id) {//打印前向传播的debug信息
 			for (int top_id = 0; top_id < top_vecs_[layer_id].size(); ++top_id) {
 				const Blob<Dtype>& blob = *top_vecs_[layer_id][top_id];
 				const string& blob_name = blob_names_[top_id_vecs_[layer_id][top_id]];
-				const Dtype data_abs_val_mean = blob.asum_data() / blob.count();
+				const Dtype data_abs_val_mean = blob.asum_data() / blob.count();//L1范数
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "    [Forward] "
 					<< "Layer " << layer_names_[layer_id]
 					<< ", top blob " << blob_name
-					<< " data: " << data_abs_val_mean;
+					<< " data: " << data_abs_val_mean;//L1范数
 			}
 			for (int param_id = 0; param_id < layers_[layer_id]->blobs().size();
 					++param_id) {
@@ -606,12 +615,12 @@ namespace caffe {
 					<< "    [Forward] "
 					<< "Layer " << layer_names_[layer_id]
 					<< ", param blob " << blob_name
-					<< " data: " << data_abs_val_mean;
+					<< " data: " << data_abs_val_mean;//L1范数
 			}
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::BackwardDebugInfo(const int layer_id) {
+		void Net<Dtype>::BackwardDebugInfo(const int layer_id) {//反向传播的debug信息
 			const vector<Blob<Dtype>*>& bottom_vec = bottom_vecs_[layer_id];
 			for (int bottom_id = 0; bottom_id < bottom_vec.size(); ++bottom_id) {
 				if (!bottom_need_backward_[layer_id][bottom_id]) { continue; }
@@ -622,7 +631,7 @@ namespace caffe {
 					<< "    [Backward] "
 					<< "Layer " << layer_names_[layer_id]
 					<< ", bottom blob " << blob_name
-					<< " diff: " << diff_abs_val_mean;
+					<< " diff: " << diff_abs_val_mean;//L1范数
 			}
 			for (int param_id = 0; param_id < layers_[layer_id]->blobs().size();
 					++param_id) {
@@ -665,32 +674,32 @@ namespace caffe {
 
 	template <typename Dtype>
 		void Net<Dtype>::ShareTrainedLayersWith(const Net* other) {
-			int num_source_layers = other->layers().size();
+			int num_source_layers = other->layers().size();//other 网络结构的层数
 			for (int i = 0; i < num_source_layers; ++i) {
-				Layer<Dtype>* source_layer = other->layers()[i].get();
-				const string& source_layer_name = other->layer_names()[i];
+				Layer<Dtype>* source_layer = other->layers()[i].get();//拿出某一层
+				const string& source_layer_name = other->layer_names()[i];//这一层的名字
 				int target_layer_id = 0;
 				while (target_layer_id != layer_names_.size() &&
-						layer_names_[target_layer_id] != source_layer_name) {
+						layer_names_[target_layer_id] != source_layer_name) {//在本网络结构中找名字相同的那一层
 					++target_layer_id;
 				}
-				if (target_layer_id == layer_names_.size()) {
+				if (target_layer_id == layer_names_.size()) {//找不到，跳过
 					LOG(INFO) << "Ignoring source layer " << source_layer_name;
 					continue;
 				}
 				DLOG(INFO) << "Copying source layer " << source_layer_name;
 				vector<shared_ptr<Blob<Dtype> > >& target_blobs =
-					layers_[target_layer_id]->blobs();
+					layers_[target_layer_id]->blobs();//拿出找到这一层的所有训练参数
 				CHECK_EQ(target_blobs.size(), source_layer->blobs().size())
-					<< "Incompatible number of blobs for layer " << source_layer_name;
+					<< "Incompatible number of blobs for layer " << source_layer_name;//两个的大小应该一致
 				for (int j = 0; j < target_blobs.size(); ++j) {
 					Blob<Dtype>* source_blob = source_layer->blobs()[j].get();
-					CHECK(target_blobs[j]->shape() == source_blob->shape())
+					CHECK(target_blobs[j]->shape() == source_blob->shape())//该参数的大小要一致
 						<< "Cannot share param " << j << " weights from layer '"
 						<< source_layer_name << "'; shape mismatch.  Source param shape is "
 						<< source_blob->shape_string() << "; target param shape is "
 						<< target_blobs[j]->shape_string();
-					target_blobs[j]->ShareData(*source_blob);
+					target_blobs[j]->ShareData(*source_blob);//共享参数
 				}
 			}
 		}
@@ -725,34 +734,34 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::Reshape() {
+		void Net<Dtype>::Reshape() {//遍历每一层，逐步reshape
 			for (int i = 0; i < layers_.size(); ++i) {
 				layers_[i]->Reshape(bottom_vecs_[i], top_vecs_[i]);
 			}
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::CopyTrainedLayersFrom(const NetParameter& param) {
+		void Net<Dtype>::CopyTrainedLayersFrom(const NetParameter& param) {//和ShareTrainedLayersWith基本一致
 			int num_source_layers = param.layer_size();
-			for (int i = 0; i < num_source_layers; ++i) {
+			for (int i = 0; i < num_source_layers; ++i) {//遍历每一层
 				const LayerParameter& source_layer = param.layer(i);
 				const string& source_layer_name = source_layer.name();
 				int target_layer_id = 0;
 				while (target_layer_id != layer_names_.size() &&
-						layer_names_[target_layer_id] != source_layer_name) {
+						layer_names_[target_layer_id] != source_layer_name) {//用名字搜索那一层
 					++target_layer_id;
 				}
-				if (target_layer_id == layer_names_.size()) {
+				if (target_layer_id == layer_names_.size()) {//找不到跳过
 					LOG(INFO) << "Ignoring source layer " << source_layer_name;
 					continue;
 				}
 				DLOG(INFO) << "Copying source layer " << source_layer_name;
 				vector<shared_ptr<Blob<Dtype> > >& target_blobs =
 					layers_[target_layer_id]->blobs();
-				CHECK_EQ(target_blobs.size(), source_layer.blobs_size())
+				CHECK_EQ(target_blobs.size(), source_layer.blobs_size())//参数个数要一致
 					<< "Incompatible number of blobs for layer " << source_layer_name;
 				for (int j = 0; j < target_blobs.size(); ++j) {
-					if (!target_blobs[j]->ShapeEquals(source_layer.blobs(j))) {
+					if (!target_blobs[j]->ShapeEquals(source_layer.blobs(j))) {//判断参数是否相等
 						Blob<Dtype> source_blob;
 						const bool kReshape = true;
 						source_blob.FromProto(source_layer.blobs(j), kReshape);
@@ -764,7 +773,7 @@ namespace caffe {
 							<< "copying from a saved net, rename the layer.";
 					}
 					const bool kReshape = false;
-					target_blobs[j]->FromProto(source_layer.blobs(j), kReshape);
+					target_blobs[j]->FromProto(source_layer.blobs(j), kReshape);//共享参数
 				}
 			}
 		}
@@ -787,7 +796,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::CopyTrainedLayersFromHDF5(const string trained_filename) {
+		void Net<Dtype>::CopyTrainedLayersFromHDF5(const string trained_filename) {//共享权重文件
 			hid_t file_hid = H5Fopen(trained_filename.c_str(), H5F_ACC_RDONLY,
 					H5P_DEFAULT);
 			CHECK_GE(file_hid, 0) << "Couldn't open " << trained_filename;
@@ -837,7 +846,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::ToProto(NetParameter* param, bool write_diff) const {
+		void Net<Dtype>::ToProto(NetParameter* param, bool write_diff) const {//序列化成pb
 			param->Clear();
 			param->set_name(name_);
 			// Add bottom and top
@@ -849,7 +858,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::ToHDF5(const string& filename, bool write_diff) const {
+		void Net<Dtype>::ToHDF5(const string& filename, bool write_diff) const {//转成hdf5
 			hid_t file_hid = H5Fcreate(filename.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT,
 					H5P_DEFAULT);
 			CHECK_GE(file_hid, 0)
@@ -906,14 +915,14 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::Update() {
+		void Net<Dtype>::Update() {//用差异矩阵更新每一层的权重
 			for (int i = 0; i < learnable_params_.size(); ++i) {
 				learnable_params_[i]->Update();
 			}
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::ClearParamDiffs() {
+		void Net<Dtype>::ClearParamDiffs() {//清空所有的层差异矩阵
 			for (int i = 0; i < learnable_params_.size(); ++i) {
 				Blob<Dtype>* blob = learnable_params_[i];
 				switch (Caffe::mode()) {
@@ -943,12 +952,12 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		bool Net<Dtype>::has_blob(const string& blob_name) const {
+		bool Net<Dtype>::has_blob(const string& blob_name) const {//用blobs名字查找是否有这一层
 			return blob_names_index_.find(blob_name) != blob_names_index_.end();
 		}
 
 	template <typename Dtype>
-		const shared_ptr<Blob<Dtype> > Net<Dtype>::blob_by_name(
+		const shared_ptr<Blob<Dtype> > Net<Dtype>::blob_by_name(//用blob名字找这一层
 				const string& blob_name) const {
 			shared_ptr<Blob<Dtype> > blob_ptr;
 			if (has_blob(blob_name)) {
@@ -961,13 +970,13 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		bool Net<Dtype>::has_layer(const string& layer_name) const {
+		bool Net<Dtype>::has_layer(const string& layer_name) const {//用layer名字查找是否有这一层
 			return layer_names_index_.find(layer_name) != layer_names_index_.end();
 		}
 
 	template <typename Dtype>
 		const shared_ptr<Layer<Dtype> > Net<Dtype>::layer_by_name(
-				const string& layer_name) const {
+				const string& layer_name) const {//用layer名字查找这一层
 			shared_ptr<Layer<Dtype> > layer_ptr;
 			if (has_layer(layer_name)) {
 				layer_ptr = layers_[layer_names_index_.find(layer_name)->second];
