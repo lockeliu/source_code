@@ -1,0 +1,2192 @@
+PROTOC src/caffe/proto/caffe.proto
+CXX .build_release/src/caffe/proto/caffe.pb.cc
+CXX src/caffe/syncedmem.cpp
+CXX src/caffe/util/im2col.cpp
+CXX src/caffe/util/db_lmdb.cpp
+CXX src/caffe/util/insert_splits.cpp
+CXX src/caffe/util/cudnn.cpp
+CXX src/caffe/util/io.cpp
+CXX src/caffe/util/db.cpp
+CXX src/caffe/util/signal_handler.cpp
+CXX src/caffe/util/upgrade_proto.cpp
+CXX src/caffe/util/blocking_queue.cpp
+CXX src/caffe/util/hdf5.cpp
+CXX src/caffe/util/benchmark.cpp
+CXX src/caffe/util/db_leveldb.cpp
+CXX src/caffe/util/math_functions.cpp
+CXX src/caffe/data_transformer.cpp
+CXX src/caffe/solver.cpp
+CXX src/caffe/net.cpp
+CXX src/caffe/layers/deconv_layer.cpp
+CXX src/caffe/layers/threshold_layer.cpp
+CXX src/caffe/layers/flatten_layer.cpp
+CXX src/caffe/layers/relu_layer.cpp
+CXX src/caffe/layers/im2col_layer.cpp
+CXX src/caffe/layers/neuron_layer.cpp
+CXX src/caffe/layers/absval_layer.cpp
+CXX src/caffe/layers/batch_norm_layer.cpp
+CXX src/caffe/layers/depthwise_conv_layer.cpp
+CXX src/caffe/layers/pooling_layer.cpp
+CXX src/caffe/layers/dummy_data_layer.cpp
+CXX src/caffe/layers/tile_layer.cpp
+CXX src/caffe/layers/scale_layer.cpp
+CXX src/caffe/layers/dropout_layer.cpp
+CXX src/caffe/layers/cudnn_softmax_layer.cpp
+CXX src/caffe/layers/input_layer.cpp
+CXX src/caffe/layers/infogain_loss_layer.cpp
+CXX src/caffe/layers/data_layer.cpp
+CXX src/caffe/layers/elu_layer.cpp
+CXX src/caffe/layers/inner_product_layer.cpp
+CXX src/caffe/layers/recurrent_layer.cpp
+CXX src/caffe/layers/power_layer.cpp
+CXX src/caffe/layers/reduction_layer.cpp
+CXX src/caffe/layers/crop_layer.cpp
+CXX src/caffe/layers/bnll_layer.cpp
+CXX src/caffe/layers/cudnn_pooling_layer.cpp
+CXX src/caffe/layers/lstm_unit_layer.cpp
+CXX src/caffe/layers/window_data_layer.cpp
+CXX src/caffe/layers/base_conv_layer.cpp
+CXX src/caffe/layers/bias_layer.cpp
+CXX src/caffe/layers/mvn_layer.cpp
+CXX src/caffe/layers/eltwise_layer.cpp
+CXX src/caffe/layers/cudnn_lrn_layer.cpp
+CXX src/caffe/layers/cudnn_lcn_layer.cpp
+CXX src/caffe/layers/lrn_layer.cpp
+CXX src/caffe/layers/cudnn_tanh_layer.cpp
+CXX src/caffe/layers/batch_reindex_layer.cpp
+CXX src/caffe/layers/accuracy_layer.cpp
+CXX src/caffe/layers/sigmoid_layer.cpp
+CXX src/caffe/layers/hdf5_data_layer.cpp
+In file included from ./include/caffe/common.hpp:6:0,
+                 from src/caffe/net.cpp:10:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+src/caffe/net.cpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::Forward(const std::vector<caffe::Blob<Dtype>*>&, Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+src/caffe/net.cpp:557:3: note: in expansion of macro 'LOG_EVERY_N'
+   LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: Forward(bottom, loss) "
+   ^
+CXX src/caffe/layers/loss_layer.cpp
+CXX src/caffe/layers/memory_data_layer.cpp
+CXX src/caffe/layers/spp_layer.cpp
+CXX src/caffe/layers/multinomial_logistic_loss_layer.cpp
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layers/crop_layer.cpp:8:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+CXX src/caffe/layers/image_data_layer.cpp
+CXX src/caffe/layers/slice_layer.cpp
+CXX src/caffe/layers/sigmoid_cross_entropy_loss_layer.cpp
+CXX src/caffe/layers/parameter_layer.cpp
+CXX src/caffe/layers/hdf5_output_layer.cpp
+CXX src/caffe/layers/euclidean_loss_layer.cpp
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layers/lstm_unit_layer.cpp:5:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+CXX src/caffe/layers/split_layer.cpp
+CXX src/caffe/layers/filter_layer.cpp
+CXX src/caffe/layers/softmax_layer.cpp
+CXX src/caffe/layers/reshape_layer.cpp
+CXX src/caffe/layers/tanh_layer.cpp
+CXX src/caffe/layers/cudnn_sigmoid_layer.cpp
+CXX src/caffe/layers/base_data_layer.cpp
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from src/caffe/layers/recurrent_layer.cpp:4:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+CXX src/caffe/layers/rnn_layer.cpp
+CXX src/caffe/layers/argmax_layer.cpp
+CXX src/caffe/layers/conv_layer.cpp
+CXX src/caffe/layers/contrastive_loss_layer.cpp
+CXX src/caffe/layers/embed_layer.cpp
+CXX src/caffe/layers/silence_layer.cpp
+CXX src/caffe/layers/hinge_loss_layer.cpp
+CXX src/caffe/layers/log_layer.cpp
+CXX src/caffe/layers/cudnn_conv_layer.cpp
+CXX src/caffe/layers/concat_layer.cpp
+CXX src/caffe/layers/softmax_loss_layer.cpp
+CXX src/caffe/layers/lstm_layer.cpp
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/layers/base_data_layer.hpp:6,
+                 from src/caffe/util/blocking_queue.cpp:4:
+src/caffe/util/blocking_queue.cpp: In member function 'T caffe::BlockingQueue<T>::pop(const string&)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+src/caffe/util/blocking_queue.cpp:49:7: note: in expansion of macro 'LOG_EVERY_N'
+       LOG_EVERY_N(INFO, 1000)<< log_on_wait;
+       ^
+CXX src/caffe/layers/exp_layer.cpp
+In file included from src/caffe/util/signal_handler.cpp:2:0:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+CXX src/caffe/layers/prelu_layer.cpp
+CXX src/caffe/layers/cudnn_relu_layer.cpp
+CXX src/caffe/blob.cpp
+CXX src/caffe/common.cpp
+CXX src/caffe/layer.cpp
+CXX src/caffe/layer_factory.cpp
+CXX src/caffe/solvers/rmsprop_solver.cpp
+CXX src/caffe/solvers/sgd_solver.cpp
+CXX src/caffe/solvers/adadelta_solver.cpp
+CXX src/caffe/solvers/nesterov_solver.cpp
+CXX src/caffe/solvers/adagrad_solver.cpp
+CXX src/caffe/solvers/adam_solver.cpp
+CXX src/caffe/internal_thread.cpp
+NVCC src/caffe/util/im2col.cu
+NVCC src/caffe/util/math_functions.cu
+NVCC src/caffe/layers/crop_layer.cu
+NVCC src/caffe/layers/contrastive_loss_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/lstm_unit_layer.cu
+NVCC src/caffe/layers/concat_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/slice_layer.cu
+NVCC src/caffe/layers/cudnn_lrn_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/batch_norm_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/cudnn_sigmoid_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/cudnn_tanh_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/im2col_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/filter_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/sigmoid_cross_entropy_loss_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/cudnn_softmax_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/exp_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/tile_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/tanh_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/euclidean_loss_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from src/caffe/solver.cpp:6:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/reduction_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from src/caffe/layers/rnn_layer.cpp:4:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/conv_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from src/caffe/layers/lstm_layer.cpp:4:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/cudnn_relu_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/dropout_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/threshold_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/pooling_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/embed_layer.cu
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/adagrad_solver.cpp:3:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/cudnn_pooling_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/adadelta_solver.cpp:3:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/softmax_loss_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/sgd_solver.cpp:4:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/bnll_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/adam_solver.cpp:3:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/lrn_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/nesterov_solver.cpp:3:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/inner_product_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+In file included from ./include/caffe/common.hpp:6:0,
+                 from ./include/caffe/blob.hpp:8,
+                 from ./include/caffe/net.hpp:10,
+                 from ./include/caffe/solver.hpp:7,
+                 from ./include/caffe/sgd_solvers.hpp:7,
+                 from src/caffe/solvers/rmsprop_solver.cpp:3:
+./include/caffe/net.hpp: In member function 'const std::vector<caffe::Blob<Dtype>*>& caffe::Net<Dtype>::ForwardPrefilled(Dtype*)':
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:917:30: warning: typedef 'INVALID_REQUESTED_LOG_SEVERITY' locally defined but not used [-Wunused-local-typedefs]
+                              INVALID_REQUESTED_LOG_SEVERITY);           \
+                              ^
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h:912:73: note: in definition of macro 'GOOGLE_GLOG_COMPILE_ASSERT'
+   typedef google::glog_internal_namespace_::CompileAssert<(bool(expr))> msg[bool(expr) ? 1 : -1]
+                                                                         ^
+./include/caffe/net.hpp:41:5: note: in expansion of macro 'LOG_EVERY_N'
+     LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
+     ^
+NVCC src/caffe/layers/mvn_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/batch_reindex_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/softmax_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/eltwise_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/recurrent_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+NVCC src/caffe/layers/log_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/bias_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/depthwise_conv_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/relu_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/hdf5_data_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/prelu_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/elu_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/scale_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/cudnn_lcn_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/deconv_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/cudnn_conv_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/power_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/sigmoid_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/split_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/absval_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/silence_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/hdf5_output_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/layers/base_data_layer.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/nesterov_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/sgd_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/adadelta_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/rmsprop_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/adam_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+NVCC src/caffe/solvers/adagrad_solver.cu
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//boost_1_58_0/include/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp(75): warning: variable "tmp" was set but never used
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(348): warning: using-declaration ignored -- it refers to the current namespace
+
+/data1/qspace/3rdparty//glog-0.3.3/include/glog/logging.h(352): warning: using-declaration ignored -- it refers to the current namespace
+
+AR -o .build_release/lib/libcaffe.a
+LD -o .build_release/lib/libcaffe.so.1.0.0
+/usr/bin/ld: skipping incompatible /usr/lib/libm.so when searching for -lm
+/usr/bin/ld: skipping incompatible /usr/lib/libpthread.so when searching for -lpthread
+/usr/bin/ld: skipping incompatible /usr/lib/libc.so when searching for -lc
