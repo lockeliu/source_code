@@ -1,6 +1,7 @@
 #ifndef CAFFE_NET_HPP_
 #define CAFFE_NET_HPP_
 
+
 #include <map>
 #include <set>
 #include <string>
