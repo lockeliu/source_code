@@ -274,14 +274,14 @@ namespace caffe {
 						  void UpdateDebugInfo(const int param_id);
 
 						  /// @brief The network name
-						  string name_;
+						  string name_;//网络的名字
 						  /// @brief The phase: TRAIN or TEST
-						  Phase phase_;
+						  Phase phase_;//网络的模式，训练或者测试
 						  /// @brief Individual layers in the net
-						  vector<shared_ptr<Layer<Dtype> > > layers_;
-						  vector<string> layer_names_;
-						  map<string, int> layer_names_index_;
-						  vector<bool> layer_need_backward_;
+						  vector<shared_ptr<Layer<Dtype> > > layers_;//存储了网络结构的每一层
+						  vector<string> layer_names_;//用vector存储了每一层的名字
+						  map<string, int> layer_names_index_;//层名字和层id的对应关系
+						  vector<bool> layer_need_backward_;//存储每一层是否需要反向传播
 						  /// @brief the blobs storing intermediate results between the layer.
 						  vector<shared_ptr<Blob<Dtype> > > blobs_;
 						  vector<string> blob_names_;
@@ -290,12 +290,12 @@ namespace caffe {
 						  /// bottom_vecs stores the vectors containing the input for each layer.
 						  /// They don't actually host the blobs (blobs_ does), so we simply store
 						  /// pointers.
-						  vector<vector<Blob<Dtype>*> > bottom_vecs_;
-						  vector<vector<int> > bottom_id_vecs_;
-						  vector<vector<bool> > bottom_need_backward_;
+						  vector<vector<Blob<Dtype>*> > bottom_vecs_;//存储每一层的输入数据
+						  vector<vector<int> > bottom_id_vecs_;//存储了每一层的输入层id
+						  vector<vector<bool> > bottom_need_backward_;//存储了每一层的是否需要反向传播
 						  /// top_vecs stores the vectors containing the output for each layer
-						  vector<vector<Blob<Dtype>*> > top_vecs_;
-						  vector<vector<int> > top_id_vecs_;
+						  vector<vector<Blob<Dtype>*> > top_vecs_;//存储了每一层的输出数据
+						  vector<vector<int> > top_id_vecs_;//存储了每一层输出id
 						  /// Vector of weight in the loss (or objective) function of each net blob,
 						  /// indexed by blob_id.
 						  vector<Dtype> blob_loss_weights_;
@@ -329,8 +329,9 @@ namespace caffe {
 						  /// The bytes of memory used by this net
 						  size_t memory_used_;
 						  /// Whether to compute and display debug info for the net.
-						  bool debug_info_;
+						  bool debug_info_;//是否开debug信息
 						  // Callbacks
+						  //一些callback调用
 						  vector<Callback*> before_forward_;
 						  vector<Callback*> after_forward_;
 						  vector<Callback*> before_backward_;

@@ -12,7 +12,7 @@
 namespace caffe {
 
 	template<typename Dtype>
-		void Solver<Dtype>::SetActionFunction(ActionCallback func) {
+		void Solver<Dtype>::SetActionFunction(ActionCallback func) {//callback
 			action_request_function_ = func;
 		}
 
@@ -27,12 +27,12 @@ namespace caffe {
 
 	template <typename Dtype>
 		Solver<Dtype>::Solver(const SolverParameter& param)
-		: net_(), callbacks_(), requested_early_exit_(false) {
+		: net_(), callbacks_(), requested_early_exit_(false) {//用solver的pb初始化
 			Init(param);
 		}
 
 	template <typename Dtype>
-		Solver<Dtype>::Solver(const string& param_file)
+		Solver<Dtype>::Solver(const string& param_file)//用solver的配置文件初始化
 		: net_(), callbacks_(), requested_early_exit_(false) {
 			SolverParameter param;
 			ReadSolverParamsFromTextFileOrDie(param_file, &param);
@@ -40,50 +40,50 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Solver<Dtype>::Init(const SolverParameter& param) {
+		void Solver<Dtype>::Init(const SolverParameter& param) {//真正的solver初始化
 			LOG_IF(INFO, Caffe::root_solver()) << "Initializing solver from parameters: "
 				<< std::endl << param.DebugString();
-			param_ = param;
+			param_ = param;//赋值配置
 			CHECK_GE(param_.average_loss(), 1) << "average_loss should be non-negative.";
-			CheckSnapshotWritePermissions();
+			CheckSnapshotWritePermissions();//检查模型是否具有写入权限，防止训练完没有写权限保存模型就悲剧了
 			if (param_.random_seed() >= 0) {
 				Caffe::set_random_seed(param_.random_seed() + Caffe::solver_rank());
 			}
 			// Scaffolding code
-			InitTrainNet();
-			InitTestNets();
+			InitTrainNet();//初始化训练solver
+			InitTestNets();//初始化测试solver
 			if (Caffe::root_solver()) {
 				LOG(INFO) << "Solver scaffolding done.";
 			}
-			iter_ = 0;
-			current_step_ = 0;
+			iter_ = 0;//迭代次数
+			current_step_ = 0;//没用的参数
 		}
 
 	template <typename Dtype>
 		void Solver<Dtype>::InitTrainNet() {
 			const int num_train_nets = param_.has_net() + param_.has_net_param() +
-				param_.has_train_net() + param_.has_train_net_param();
+				param_.has_train_net() + param_.has_train_net_param();//网络个数？
 			const string& field_names = "net, net_param, train_net, train_net_param";
 			CHECK_GE(num_train_nets, 1) << "SolverParameter must specify a train net "
 				<< "using one of these fields: " << field_names;
 			CHECK_LE(num_train_nets, 1) << "SolverParameter must not contain more than "
 				<< "one of these fields specifying a train_net: " << field_names;
-			NetParameter net_param;
-			if (param_.has_train_net_param()) {
+			NetParameter net_param;//复制net配置到net_param
+			if (param_.has_train_net_param()) {//pb
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Creating training net specified in train_net_param.";
 				net_param.CopyFrom(param_.train_net_param());
-			} else if (param_.has_train_net()) {
+			} else if (param_.has_train_net()) {//文件
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Creating training net from train_net file: " << param_.train_net();
 				ReadNetParamsFromTextFileOrDie(param_.train_net(), &net_param);
 			}
-			if (param_.has_net_param()) {
+			if (param_.has_net_param()) {//pb
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Creating training net specified in net_param.";
 				net_param.CopyFrom(param_.net_param());
 			}
-			if (param_.has_net()) {
+			if (param_.has_net()) {//文件
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Creating training net from net file: " << param_.net();
 				ReadNetParamsFromTextFileOrDie(param_.net(), &net_param);
@@ -92,12 +92,12 @@ namespace caffe {
 			// precedence); then, merge in any NetState specified by the net_param itself;
 			// finally, merge in any NetState specified by the train_state (highest
 			// precedence).
-			NetState net_state;
-			net_state.set_phase(TRAIN);
+			NetState net_state;//设置网络的状态
+			net_state.set_phase(TRAIN);//设置网络的模式
 			net_state.MergeFrom(net_param.state());
-			net_state.MergeFrom(param_.train_state());
-			net_param.mutable_state()->CopyFrom(net_state);
-			net_.reset(new Net<Dtype>(net_param));
+			net_state.MergeFrom(param_.train_state());//网络规则
+			net_param.mutable_state()->CopyFrom(net_state);//网络规则
+			net_.reset(new Net<Dtype>(net_param));//用net配置初始化网络结构
 		}
 
 	template <typename Dtype>
@@ -114,7 +114,7 @@ namespace caffe {
 				CHECK_GE(param_.test_iter_size(), num_test_nets)
 					<< "test_iter must be specified for each test network.";
 			} else {
-				CHECK_EQ(param_.test_iter_size(), num_test_nets)
+				CHECK_EQ(param_.test_iter_size(), num_test_nets)//测试迭代测试的个数必须和测试网络结构个数相等
 					<< "test_iter must be specified for each test network.";
 			}
 			// If we have a generic net (specified by net or net_param, rather than
@@ -125,28 +125,29 @@ namespace caffe {
 			const int num_generic_net_instances = param_.test_iter_size() - num_test_nets;
 			const int num_test_net_instances = num_test_nets + num_generic_net_instances;
 			if (param_.test_state_size()) {
-				CHECK_EQ(param_.test_state_size(), num_test_net_instances)
+				CHECK_EQ(param_.test_state_size(), num_test_net_instances)//和测试网络个数需要相等
 					<< "test_state must be unspecified or specified once per test net.";
 			}
 			if (num_test_net_instances) {
-				CHECK_GT(param_.test_interval(), 0);
+				CHECK_GT(param_.test_interval(), 0);//只要有测试网络就必须有这个
 			}
 			int test_net_id = 0;
-			vector<string> sources(num_test_net_instances);
-			vector<NetParameter> net_params(num_test_net_instances);
-			for (int i = 0; i < num_test_net_params; ++i, ++test_net_id) {
+			vector<string> sources(num_test_net_instances);//存放网络名字，debug用而已
+			vector<NetParameter> net_params(num_test_net_instances);//存放网络结构配置
+			for (int i = 0; i < num_test_net_params; ++i, ++test_net_id) {//从pb copy网络结构到pb
 				sources[test_net_id] = "test_net_param";
 				net_params[test_net_id].CopyFrom(param_.test_net_param(i));
 			}
-			for (int i = 0; i < num_test_net_files; ++i, ++test_net_id) {
+			for (int i = 0; i < num_test_net_files; ++i, ++test_net_id) {//从文件copy网络结构到pb
 				sources[test_net_id] = "test_net file: " + param_.test_net(i);
 				ReadNetParamsFromTextFileOrDie(param_.test_net(i),
 						&net_params[test_net_id]);
 			}
-			const int remaining_test_nets = param_.test_iter_size() - test_net_id;
+			const int remaining_test_nets = param_.test_iter_size() - test_net_id;//还剩下多少个网络结构
+			//下面两个是互斥的，一个出现，另外就不会出现
 			if (has_net_param) {
 				for (int i = 0; i < remaining_test_nets; ++i, ++test_net_id) {
-					sources[test_net_id] = "net_param";
+					sources[test_net_id] = "net_param";//网络名字
 					net_params[test_net_id].CopyFrom(param_.net_param());
 				}
 			}
@@ -157,22 +158,22 @@ namespace caffe {
 				}
 			}
 			test_nets_.resize(num_test_net_instances);
-			for (int i = 0; i < num_test_net_instances; ++i) {
+			for (int i = 0; i < num_test_net_instances; ++i) {//遍历每一个测试网络结构
 				// Set the correct NetState.  We start with the solver defaults (lowest
 				// precedence); then, merge in any NetState specified by the net_param
 				// itself; finally, merge in any NetState specified by the test_state
 				// (highest precedence).
-				NetState net_state;
-				net_state.set_phase(TEST);
+				NetState net_state;//网络结构的规则
+				net_state.set_phase(TEST);//测试模式
 				net_state.MergeFrom(net_params[i].state());
 				if (param_.test_state_size()) {
 					net_state.MergeFrom(param_.test_state(i));
 				}
-				net_params[i].mutable_state()->CopyFrom(net_state);
+				net_params[i].mutable_state()->CopyFrom(net_state);//复制网络规则
 				LOG(INFO)
 					<< "Creating test net (#" << i << ") specified by " << sources[i];
-				test_nets_[i].reset(new Net<Dtype>(net_params[i]));
-				test_nets_[i]->set_debug_info(param_.debug_info());
+				test_nets_[i].reset(new Net<Dtype>(net_params[i]));//用网络配置初始化网络结构
+				test_nets_[i]->set_debug_info(param_.debug_info());//设置debug信息
 			}
 		}
 
@@ -185,11 +186,11 @@ namespace caffe {
 			smoothed_loss_ = 0;
 			iteration_timer_.Start();
 
-			while (iter_ < stop_iter) {
+			while (iter_ < stop_iter) {//训练迭代
 				// zero-init the params
-				net_->ClearParamDiffs();
+				net_->ClearParamDiffs();//清空所有的差异矩阵
 				if (param_.test_interval() && iter_ % param_.test_interval() == 0
-						&& (iter_ > 0 || param_.test_initialization())) {
+						&& (iter_ > 0 || param_.test_initialization())) {//判断是否需要到测试的时候了
 					if (Caffe::root_solver()) {
 						TestAll();
 					}
@@ -198,31 +199,31 @@ namespace caffe {
 						break;
 					}
 				}
-
+				//调用callback函数
 				for (int i = 0; i < callbacks_.size(); ++i) {
 					callbacks_[i]->on_start();
 				}
-				const bool display = param_.display() && iter_ % param_.display() == 0;
+				const bool display = param_.display() && iter_ % param_.display() == 0;//是否展示
 				net_->set_debug_info(display && param_.debug_info());
 				// accumulate the loss and gradient
 				Dtype loss = 0;
 				for (int i = 0; i < param_.iter_size(); ++i) {
-					loss += net_->ForwardBackward();
+					loss += net_->ForwardBackward();//进行iter_size次前向传播反向传播
 				}
-				loss /= param_.iter_size();
+				loss /= param_.iter_size();//对loss求平均值
 				// average the loss across iterations for smoothed reporting
 				UpdateSmoothedLoss(loss, start_iter, average_loss);
-				if (display) {
+				if (display) {//展示
 					float lapse = iteration_timer_.Seconds();
 					float per_s = (iter_ - iterations_last_) / (lapse ? lapse : 1);
 					LOG_IF(INFO, Caffe::root_solver()) << "Iteration " << iter_
 						<< " (" << per_s << " iter/s, " << lapse << "s/"
-						<< param_.display() << " iters), loss = " << smoothed_loss_;
+						<< param_.display() << " iters), loss = " << smoothed_loss_;//耗时，loss等信息
 					iteration_timer_.Start();
 					iterations_last_ = iter_;
 					const vector<Blob<Dtype>*>& result = net_->output_blobs();
 					int score_index = 0;
-					for (int j = 0; j < result.size(); ++j) {
+					for (int j = 0; j < result.size(); ++j) {//展示acc和loss里面的值
 						const Dtype* result_vec = result[j]->cpu_data();
 						const string& output_name =
 							net_->blob_names()[net_->output_blob_indices()[j]];
@@ -240,10 +241,11 @@ namespace caffe {
 						}
 					}
 				}
+				//处理完之后的一个callback
 				for (int i = 0; i < callbacks_.size(); ++i) {
 					callbacks_[i]->on_gradients_ready();
 				}
-				ApplyUpdate();
+				ApplyUpdate();//进行一次update
 
 				// Increment the internal iter_ counter -- its value should always indicate
 				// the number of times the weights have been updated.
@@ -255,7 +257,7 @@ namespace caffe {
 				if ((param_.snapshot()
 							&& iter_ % param_.snapshot() == 0
 							&& Caffe::root_solver()) ||
-						(request == SolverAction::SNAPSHOT)) {
+						(request == SolverAction::SNAPSHOT)) {//是否到需要保存快照的次数
 					Snapshot();
 				}
 				if (SolverAction::STOP == request) {
@@ -267,7 +269,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Solver<Dtype>::Solve(const char* resume_file) {
+		void Solver<Dtype>::Solve(const char* resume_file) {//训练的函数
 			CHECK(Caffe::root_solver());
 			LOG(INFO) << "Solving " << net_->name();
 			LOG(INFO) << "Learning Rate Policy: " << param_.lr_policy();
@@ -277,16 +279,16 @@ namespace caffe {
 
 			if (resume_file) {
 				LOG(INFO) << "Restoring previous solver status from " << resume_file;
-				Restore(resume_file);
+				Restore(resume_file);//加载配置文件
 			}
 
 			// For a network that is trained by the solver, no bottom or top vecs
 			// should be given, and we will just provide dummy vecs.
-			int start_iter = iter_;
-			Step(param_.max_iter() - iter_);
+			int start_iter = iter_;//当前的迭代次数，支持断点续传，只要保存了中间文件
+			Step(param_.max_iter() - iter_);//迭代这么多次
 			// If we haven't already, save a snapshot after optimization, unless
 			// overridden by setting snapshot_after_train := false
-			if (param_.snapshot_after_train()
+			if (param_.snapshot_after_train()//训练完成后最后一次保存模型问津
 					&& (!param_.snapshot() || iter_ % param_.snapshot() != 0)) {
 				Snapshot();
 			}
@@ -300,16 +302,16 @@ namespace caffe {
 			// training, for the train net we only run a forward pass as we've already
 			// updated the parameters "max_iter" times -- this final pass is only done to
 			// display the loss, which is computed in the forward pass.
-			if (param_.display() && iter_ % param_.display() == 0) {
+			if (param_.display() && iter_ % param_.display() == 0) {//计算损失函数
 				int average_loss = this->param_.average_loss();
 				Dtype loss;
-				net_->Forward(&loss);
+				net_->Forward(&loss);//前向传播
 
 				UpdateSmoothedLoss(loss, start_iter, average_loss);
 
 				LOG(INFO) << "Iteration " << iter_ << ", loss = " << smoothed_loss_;
 			}
-			if (param_.test_interval() && iter_ % param_.test_interval() == 0) {
+			if (param_.test_interval() && iter_ % param_.test_interval() == 0) {//如果需要测试，就测试所有的测试网络
 				TestAll();
 			}
 			LOG(INFO) << "Optimization Done.";
@@ -319,7 +321,7 @@ namespace caffe {
 		void Solver<Dtype>::TestAll() {
 			for (int test_net_id = 0;
 					test_net_id < test_nets_.size() && !requested_early_exit_;
-					++test_net_id) {
+					++test_net_id) {//测试所有的测试网络结构
 				Test(test_net_id);
 			}
 		}
@@ -330,17 +332,17 @@ namespace caffe {
 			LOG(INFO) << "Iteration " << iter_
 				<< ", Testing net (#" << test_net_id << ")";
 			CHECK_NOTNULL(test_nets_[test_net_id].get())->
-				ShareTrainedLayersWith(net_.get());
+				ShareTrainedLayersWith(net_.get());//先把权重共享过来，再进行测试
 			vector<Dtype> test_score;
 			vector<int> test_score_output_id;
-			const shared_ptr<Net<Dtype> >& test_net = test_nets_[test_net_id];
+			const shared_ptr<Net<Dtype> >& test_net = test_nets_[test_net_id];//拿出测试网络
 			Dtype loss = 0;
-			for (int i = 0; i < param_.test_iter(test_net_id); ++i) {
+			for (int i = 0; i < param_.test_iter(test_net_id); ++i) {//测试的时候迭代这么多次
 				SolverAction::Enum request = GetRequestedAction();
 				// Check to see if stoppage of testing/training has been requested.
 				while (request != SolverAction::NONE) {
 					if (SolverAction::SNAPSHOT == request) {
-						Snapshot();
+						Snapshot();//测试的时候也保存快照
 					} else if (SolverAction::STOP == request) {
 						requested_early_exit_ = true;
 					}
@@ -353,8 +355,8 @@ namespace caffe {
 
 				Dtype iter_loss;
 				const vector<Blob<Dtype>*>& result =
-					test_net->Forward(&iter_loss);
-				if (param_.test_compute_loss()) {
+					test_net->Forward(&iter_loss);//前向传播,返回了acc和loss等等
+				if (param_.test_compute_loss()) {//计算loss
 					loss += iter_loss;
 				}
 				if (i == 0) {
@@ -370,7 +372,7 @@ namespace caffe {
 					for (int j = 0; j < result.size(); ++j) {
 						const Dtype* result_vec = result[j]->cpu_data();
 						for (int k = 0; k < result[j]->count(); ++k) {
-							test_score[idx++] += result_vec[k];
+							test_score[idx++] += result_vec[k];//已经有对应关系了，上面
 						}
 					}
 				}
@@ -383,7 +385,7 @@ namespace caffe {
 				loss /= param_.test_iter(test_net_id);
 				LOG(INFO) << "Test loss: " << loss;
 			}
-			for (int i = 0; i < test_score.size(); ++i) {
+			for (int i = 0; i < test_score.size(); ++i) {//统计loss结果，输出
 				const int output_blob_index =
 					test_net->output_blob_indices()[test_score_output_id[i]];
 				const string& output_name = test_net->blob_names()[output_blob_index];
@@ -400,7 +402,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Solver<Dtype>::Snapshot() {
+		void Solver<Dtype>::Snapshot() {//保存一次快照
 			CHECK(Caffe::root_solver());
 			string model_filename;
 			switch (param_.snapshot_format()) {
@@ -418,7 +420,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Solver<Dtype>::CheckSnapshotWritePermissions() {
+		void Solver<Dtype>::CheckSnapshotWritePermissions() {//测试下写快照文件，是否有权限
 			if (Caffe::root_solver() && param_.snapshot()) {
 				CHECK(param_.has_snapshot_prefix())
 					<< "In solver params, snapshot is specified but snapshot_prefix is not";
@@ -436,13 +438,13 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		string Solver<Dtype>::SnapshotFilename(const string extension) {
+		string Solver<Dtype>::SnapshotFilename(const string extension) {//返回快照的文件
 			return param_.snapshot_prefix() + "_iter_" + caffe::format_int(iter_)
 				+ extension;
 		}
 
 	template <typename Dtype>
-		string Solver<Dtype>::SnapshotToBinaryProto() {
+		string Solver<Dtype>::SnapshotToBinaryProto() {//快照转成pb
 			string model_filename = SnapshotFilename(".caffemodel");
 			LOG(INFO) << "Snapshotting to binary proto file " << model_filename;
 			NetParameter net_param;
@@ -452,7 +454,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		string Solver<Dtype>::SnapshotToHDF5() {
+		string Solver<Dtype>::SnapshotToHDF5() {//快照转成hdf5
 			string model_filename = SnapshotFilename(".caffemodel.h5");
 			LOG(INFO) << "Snapshotting to HDF5 file " << model_filename;
 			net_->ToHDF5(model_filename, param_.snapshot_diff());
@@ -460,7 +462,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Solver<Dtype>::Restore(const char* state_file) {
+		void Solver<Dtype>::Restore(const char* state_file) {//加载配置文件
 			string state_filename(state_file);
 			if (state_filename.size() >= 3 &&
 					state_filename.compare(state_filename.size() - 3, 3, ".h5") == 0) {
@@ -472,7 +474,7 @@ namespace caffe {
 
 	template <typename Dtype>
 		void Solver<Dtype>::UpdateSmoothedLoss(Dtype loss, int start_iter,
-				int average_loss) {
+				int average_loss) {//计算总体的loss函数
 			if (losses_.size() < average_loss) {
 				losses_.push_back(loss);
 				int size = losses_.size();
