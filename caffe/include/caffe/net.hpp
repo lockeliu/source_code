@@ -81,7 +81,7 @@ namespace caffe {
 						   * This is useful to propagate changes to layer sizes without running
 						   * a forward pass, e.g. to compute output feature size.
 						   */
-						  void Reshape();
+						  void Reshape();//对所有的layer进行reshape操作
 
 						  Dtype ForwardBackward() {//进行一次前向传播，接着一次反向传播
 							  Dtype loss;
@@ -98,13 +98,13 @@ namespace caffe {
 						   * Note: this is called by Net::Init, and thus should normally not be
 						   * called manually.
 						   */
-						  void ShareWeights();
+						  void ShareWeights();//从配置中加载权重
 
 						  /**
 						   * @brief For an already initialized net, implicitly copies (i.e., using no
 						   *        additional memory) the pre-trained layers from another Net.
 						   */
-						  void ShareTrainedLayersWith(const Net* other);
+						  void ShareTrainedLayersWith(const Net* other);//从某个网络结构copy权重参数
 						  // For an already initialized net, CopyTrainedLayersFrom() copies the already
 						  // trained layers from another net parameter instance.
 						  /**
@@ -116,76 +116,76 @@ namespace caffe {
 						  void CopyTrainedLayersFromBinaryProto(const string trained_filename);
 						  void CopyTrainedLayersFromHDF5(const string trained_filename);
 						  /// @brief Writes the net to a proto.
-						  void ToProto(NetParameter* param, bool write_diff = false) const;
+						  void ToProto(NetParameter* param, bool write_diff = false) const;//序列化成pb
 						  /// @brief Writes the net to an HDF5 file.
 						  void ToHDF5(const string& filename, bool write_diff = false) const;
 
 						  /// @brief returns the network name.
-						  inline const string& name() const { return name_; }
+						  inline const string& name() const { return name_; }//网络名字
 						  /// @brief returns the layer names
-						  inline const vector<string>& layer_names() const { return layer_names_; }
+						  inline const vector<string>& layer_names() const { return layer_names_; }//所有层的名字
 						  /// @brief returns the blob names
-						  inline const vector<string>& blob_names() const { return blob_names_; }
+						  inline const vector<string>& blob_names() const { return blob_names_; }//所有中间输入输出的名字
 						  /// @brief returns the blobs
-						  inline const vector<shared_ptr<Blob<Dtype> > >& blobs() const {
+						  inline const vector<shared_ptr<Blob<Dtype> > >& blobs() const {//所有的中间输入输出
 							  return blobs_;
 						  }
 						  /// @brief returns the layers
-						  inline const vector<shared_ptr<Layer<Dtype> > >& layers() const {
+						  inline const vector<shared_ptr<Layer<Dtype> > >& layers() const {//所有层layer
 							  return layers_;
 						  }
 						  /// @brief returns the phase: TRAIN or TEST
-						  inline Phase phase() const { return phase_; }
+						  inline Phase phase() const { return phase_; }//网络的模式
 						  /**
 						   * @brief returns the bottom vecs for each layer -- usually you won't
 						   *        need this unless you do per-layer checks such as gradients.
 						   */
-						  inline const vector<vector<Blob<Dtype>*> >& bottom_vecs() const {
+						  inline const vector<vector<Blob<Dtype>*> >& bottom_vecs() const {//所有layers的输入
 							  return bottom_vecs_;
 						  }
 						  /**
 						   * @brief returns the top vecs for each layer -- usually you won't
 						   *        need this unless you do per-layer checks such as gradients.
 						   */
-						  inline const vector<vector<Blob<Dtype>*> >& top_vecs() const {
+						  inline const vector<vector<Blob<Dtype>*> >& top_vecs() const {//所有layers的输出
 							  return top_vecs_;
 						  }
 						  /// @brief returns the ids of the top blobs of layer i
-						  inline const vector<int> & top_ids(int i) const {
+						  inline const vector<int> & top_ids(int i) const {//返回某层的输出id
 							  CHECK_GE(i, 0) << "Invalid layer id";
 							  CHECK_LT(i, top_id_vecs_.size()) << "Invalid layer id";
 							  return top_id_vecs_[i];
 						  }
 						  /// @brief returns the ids of the bottom blobs of layer i
-						  inline const vector<int> & bottom_ids(int i) const {
+						  inline const vector<int> & bottom_ids(int i) const {//返回某层的输入id
 							  CHECK_GE(i, 0) << "Invalid layer id";
 							  CHECK_LT(i, bottom_id_vecs_.size()) << "Invalid layer id";
 							  return bottom_id_vecs_[i];
 						  }
-						  inline const vector<vector<bool> >& bottom_need_backward() const {
+						  inline const vector<vector<bool> >& bottom_need_backward() const {//某个输入是否反向传播
 							  return bottom_need_backward_;
 						  }
 						  inline const vector<Dtype>& blob_loss_weights() const {
 							  return blob_loss_weights_;
 						  }
-						  inline const vector<bool>& layer_need_backward() const {
+						  inline const vector<bool>& layer_need_backward() const {//某层是否反向传播
 							  return layer_need_backward_;
 						  }
 						  /// @brief returns the parameters
-						  inline const vector<shared_ptr<Blob<Dtype> > >& params() const {
+						  inline const vector<shared_ptr<Blob<Dtype> > >& params() const {//所有参数
 							  return params_;
 						  }
-						  inline const vector<Blob<Dtype>*>& learnable_params() const {
+						  inline const vector<Blob<Dtype>*>& learnable_params() const {//所有的学习参数
 							  return learnable_params_;
 						  }
 						  /// @brief returns the learnable parameter learning rate multipliers
-						  inline const vector<float>& params_lr() const { return params_lr_; }
-						  inline const vector<bool>& has_params_lr() const { return has_params_lr_; }
+						  inline const vector<float>& params_lr() const { return params_lr_; }//学习率
+						  inline const vector<bool>& has_params_lr() const { return has_params_lr_; }//是否有学习率
 						  /// @brief returns the learnable parameter decay multipliers
-						  inline const vector<float>& params_weight_decay() const {
+						  inline const vector<float>& params_weight_decay() const {//衰变参数
 							  return params_weight_decay_;
 						  }
-						  inline const vector<bool>& has_params_decay() const {
+						  inline const vector<bool>& has_params_decay() const {//是否有衰变参数
 							  return has_params_decay_;
 						  }
 						  const map<string, int>& param_names_index() const {
@@ -196,24 +196,24 @@ namespace caffe {
 							  return param_display_names_;
 						  }
 						  /// @brief Input and output blob numbers
-						  inline int num_inputs() const { return net_input_blobs_.size(); }
-						  inline int num_outputs() const { return net_output_blobs_.size(); }
-						  inline const vector<Blob<Dtype>*>& input_blobs() const {
+						  inline int num_inputs() const { return net_input_blobs_.size(); }//输入的个数
+						  inline int num_outputs() const { return net_output_blobs_.size(); }//输出的个数
+						  inline const vector<Blob<Dtype>*>& input_blobs() const {//返回输入数据
 							  return net_input_blobs_;
 						  }
-						  inline const vector<Blob<Dtype>*>& output_blobs() const {
+						  inline const vector<Blob<Dtype>*>& output_blobs() const {//返回输出数据
 							  return net_output_blobs_;
 						  }
-						  inline const vector<int>& input_blob_indices() const {
+						  inline const vector<int>& input_blob_indices() const {//返回输入数据的id
 							  return net_input_blob_indices_;
 						  }
-						  inline const vector<int>& output_blob_indices() const {
+						  inline const vector<int>& output_blob_indices() const {//返回输出数据的id1
 							  return net_output_blob_indices_;
 						  }
-						  bool has_blob(const string& blob_name) const;
-						  const shared_ptr<Blob<Dtype> > blob_by_name(const string& blob_name) const;
-						  bool has_layer(const string& layer_name) const;
-						  const shared_ptr<Layer<Dtype> > layer_by_name(const string& layer_name) const;
+						  bool has_blob(const string& blob_name) const;//判断是否有这个blobs
+						  const shared_ptr<Blob<Dtype> > blob_by_name(const string& blob_name) const;//用blob名字查找是否有这个blob数据
+						  bool has_layer(const string& layer_name) const;//用layers名字判断是否有该层
+						  const shared_ptr<Layer<Dtype> > layer_by_name(const string& layer_name) const;//用layer名查找是否有该layer
 
 						  void set_debug_info(const bool value) { debug_info_ = value; }
 
@@ -223,11 +223,12 @@ namespace caffe {
 						   *        phase, level, and stage.
 						   */
 						  static void FilterNet(const NetParameter& param,
-								  NetParameter* param_filtered);
+								  NetParameter* param_filtered);//根据规则筛选网络结构
 						  /// @brief return whether NetState state meets NetStateRule rule
 						  static bool StateMeetsRule(const NetState& state, const NetStateRule& rule,
-								  const string& layer_name);
+								  const string& layer_name);//判断规则是否符合或者不符合
 
+						  //以下都是callback回调函数
 						  // Invoked at specific points during an iteration
 						  class Callback {
 							  protected:

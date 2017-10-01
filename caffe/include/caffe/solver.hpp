@@ -54,9 +54,9 @@ namespace caffe {
 				SolverAction::Enum GetRequestedAction();
 				// The main entry of the solver function. In default, iter will be zero. Pass
 				// in a non-zero iter number to resume training for a pre-trained net.
-				virtual void Solve(const char* resume_file = NULL);
-				inline void Solve(const string resume_file) { Solve(resume_file.c_str()); }
-				void Step(int iters);
+				virtual void Solve(const char* resume_file = NULL);//训练某个网络结构
+				inline void Solve(const string resume_file) { Solve(resume_file.c_str()); }//训练某个网络结构
+				void Step(int iters);//训练iters次
 				// The Restore method simply dispatches to one of the
 				// RestoreSolverStateFrom___ protected methods. You should implement these
 				// methods to restore the state from the appropriate snapshot type.
@@ -88,7 +88,7 @@ namespace caffe {
 					callbacks_.push_back(value);
 				}
 
-				void CheckSnapshotWritePermissions();
+				void CheckSnapshotWritePermissions();//check，模型目录是否有写权限
 				/**
 				 * @brief Returns the solver type.
 				 */
@@ -96,38 +96,38 @@ namespace caffe {
 
 			protected:
 				// Make and apply the update value for the current iteration.
-				virtual void ApplyUpdate() = 0;
+				virtual void ApplyUpdate() = 0;//更新矩阵
 				string SnapshotFilename(const string extension);
 				string SnapshotToBinaryProto();
 				string SnapshotToHDF5();
 				// The test routine
-				void TestAll();
-				void Test(const int test_net_id = 0);
+				void TestAll();//验证所有验证网络结构
+				void Test(const int test_net_id = 0);//验证某个网络
 				virtual void SnapshotSolverState(const string& model_filename) = 0;
 				virtual void RestoreSolverStateFromHDF5(const string& state_file) = 0;
 				virtual void RestoreSolverStateFromBinaryProto(const string& state_file) = 0;
-				void DisplayOutputBlobs(const int net_id);
-				void UpdateSmoothedLoss(Dtype loss, int start_iter, int average_loss);
+				void DisplayOutputBlobs(const int net_id);//输出某个验证网络的输出，loss or acc
+				void UpdateSmoothedLoss(Dtype loss, int start_iter, int average_loss);//更行损失函数
 
 				SolverParameter param_;//solver的网络配置
 				int iter_;//迭代次数
 				int current_step_;//没用的参数
-				shared_ptr<Net<Dtype> > net_;
-				vector<shared_ptr<Net<Dtype> > > test_nets_;
-				vector<Callback*> callbacks_;
-				vector<Dtype> losses_;
-				Dtype smoothed_loss_;
+				shared_ptr<Net<Dtype> > net_;//训练网络结构
+				vector<shared_ptr<Net<Dtype> > > test_nets_;//多个验证网络结构
+				vector<Callback*> callbacks_;//callback回调函数
+				vector<Dtype> losses_;//辅助计算损失函数
+				Dtype smoothed_loss_;//计算总的损失函数
 
 				// A function that can be set by a client of the Solver to provide indication
 				// that it wants a snapshot saved and/or to exit early.
-				ActionCallback action_request_function_;
+				ActionCallback action_request_function_;//一种callback
 
 				// True iff a request to stop early was received.
-				bool requested_early_exit_;
+				bool requested_early_exit_;//支持从外部停止调用停止训练
 
 				// Timing information, handy to tune e.g. nbr of GPUs
 				Timer iteration_timer_;//计时器
-				float iterations_last_;
+				float iterations_last_;//记录上一次展示的迭代次数
 
 				DISABLE_COPY_AND_ASSIGN(Solver);
 		};
