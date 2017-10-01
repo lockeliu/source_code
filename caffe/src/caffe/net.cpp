@@ -131,21 +131,21 @@ namespace caffe {
 					<< "Setting up " << layer_names_[layer_id];
 				for (int top_id = 0; top_id < top_vecs_[layer_id].size(); ++top_id) {
 					if (blob_loss_weights_.size() <= top_id_vecs_[layer_id][top_id]) {
-						blob_loss_weights_.resize(top_id_vecs_[layer_id][top_id] + 1, Dtype(0));//设置loss_weight
+						blob_loss_weights_.resize(top_id_vecs_[layer_id][top_id] + 1, Dtype(0));//如果内存不够，重新申请内存
 					}
-					blob_loss_weights_[top_id_vecs_[layer_id][top_id]] = layer->loss(top_id);
+					blob_loss_weights_[top_id_vecs_[layer_id][top_id]] = layer->loss(top_id);//设置loss_weight
 					LOG_IF(INFO, Caffe::root_solver())
 						<< "Top shape: " << top_vecs_[layer_id][top_id]->shape_string();
 					if (layer->loss(top_id)) {
 						LOG_IF(INFO, Caffe::root_solver())
 							<< "    with loss weight " << layer->loss(top_id);
 					}
-					memory_used_ += top_vecs_[layer_id][top_id]->count();
+					memory_used_ += top_vecs_[layer_id][top_id]->count();//使用的内存大小
 				}
 				LOG_IF(INFO, Caffe::root_solver())
 					<< "Memory required for data: " << memory_used_ * sizeof(Dtype);
-				const int param_size = layer_param.param_size();
-				const int num_param_blobs = layers_[layer_id]->blobs().size();
+				const int param_size = layer_param.param_size();//该层里面的参数个数
+				const int num_param_blobs = layers_[layer_id]->blobs().size();//参数的blob 数量
 				CHECK_LE(param_size, num_param_blobs)
 					<< "Too many params specified for layer " << layer_param.name();
 				ParamSpec default_param_spec;
@@ -177,13 +177,15 @@ namespace caffe {
 			// computation for the entire layer
 			set<string> blobs_under_loss;
 			set<string> blobs_skip_backp;
+			//一旦某一层禁止反向传播的话，前面的全部禁止反向传播了
 			for (int layer_id = layers_.size() - 1; layer_id >= 0; --layer_id) {
-				bool layer_contributes_loss = false;
-				bool layer_skip_propagate_down = true;
-				for (int top_id = 0; top_id < top_vecs_[layer_id].size(); ++top_id) {
+				bool layer_contributes_loss = false;//该层贡献损失
+				bool layer_skip_propagate_down = true;//该层是否反向传播
+				//处理输出数据
+				for (int top_id = 0; top_id < top_vecs_[layer_id].size(); ++top_id) {//处理每个输出
 					const string& blob_name = blob_names_[top_id_vecs_[layer_id][top_id]];
 					if (layers_[layer_id]->loss(top_id) ||
-							(blobs_under_loss.find(blob_name) != blobs_under_loss.end())) {
+							(blobs_under_loss.find(blob_name) != blobs_under_loss.end())) {//有损失函数 or 
 						layer_contributes_loss = true;
 					}
 					if (blobs_skip_backp.find(blob_name) == blobs_skip_backp.end()) {
@@ -194,57 +196,59 @@ namespace caffe {
 				}
 				// If this layer can skip backward computation, also all his bottom blobs
 				// don't need backpropagation
-				if (layer_need_backward_[layer_id] && layer_skip_propagate_down) {
+				if (layer_need_backward_[layer_id] && layer_skip_propagate_down) {//是否跳过反向传播
 					layer_need_backward_[layer_id] = false;
-					for (int bottom_id = 0; bottom_id < bottom_vecs_[layer_id].size();
+					for (int bottom_id = 0; bottom_id < bottom_vecs_[layer_id].size();//需要禁止改成所有数据的反向传播
 							++bottom_id) {
 						bottom_need_backward_[layer_id][bottom_id] = false;
 					}
 				}
-				if (!layer_contributes_loss) { layer_need_backward_[layer_id] = false; }
+				if (!layer_contributes_loss) { layer_need_backward_[layer_id] = false; }//如果不贡献损失值，禁止反向传播
 				if (Caffe::root_solver()) {
 					if (layer_need_backward_[layer_id]) {
 						LOG(INFO) << layer_names_[layer_id] << " needs backward computation.";
-					} else {
+					} else {/
 						LOG(INFO) << layer_names_[layer_id]
 							<< " does not need backward computation.";
 					}
 				}
+				//处理输入数据
 				for (int bottom_id = 0; bottom_id < bottom_vecs_[layer_id].size();
-						++bottom_id) {
-					if (layer_contributes_loss) {
+						++bottom_id) {//遍历每个输入数据
+					if (layer_contributes_loss) {//是否贡献损失
 						const string& blob_name =
 							blob_names_[bottom_id_vecs_[layer_id][bottom_id]];
-						blobs_under_loss.insert(blob_name);
+						blobs_under_loss.insert(blob_name);//贡献损失，才放这里
 					} else {
-						bottom_need_backward_[layer_id][bottom_id] = false;
+						bottom_need_backward_[layer_id][bottom_id] = false;//反则不需要反向传播
 					}
-					if (!bottom_need_backward_[layer_id][bottom_id]) {
+					if (!bottom_need_backward_[layer_id][bottom_id]) {//如果不需要反向传播，需要跳过
 						const string& blob_name =
 							blob_names_[bottom_id_vecs_[layer_id][bottom_id]];
-						blobs_skip_backp.insert(blob_name);
+						blobs_skip_backp.insert(blob_name);//如果需要跳过反向传播
 					}
 				}
 			}
 			// Handle force_backward if needed.
-			if (param.force_backward()) {
-				for (int layer_id = 0; layer_id < layers_.size(); ++layer_id) {
-					layer_need_backward_[layer_id] = true;
+			if (param.force_backward()) {//是否强制进行反向传播
+				for (int layer_id = 0; layer_id < layers_.size(); ++layer_id) {//遍历每一层
+					layer_need_backward_[layer_id] = true;//强制进行反向传播
 					for (int bottom_id = 0;
-							bottom_id < bottom_need_backward_[layer_id].size(); ++bottom_id) {
+							bottom_id < bottom_need_backward_[layer_id].size(); ++bottom_id) {//处理每个输入数据
 						bottom_need_backward_[layer_id][bottom_id] =
 							bottom_need_backward_[layer_id][bottom_id] ||
-							layers_[layer_id]->AllowForceBackward(bottom_id);
+							layers_[layer_id]->AllowForceBackward(bottom_id);//判断是否允许强制反向传播
 						blob_need_backward_[bottom_id_vecs_[layer_id][bottom_id]] =
 							blob_need_backward_[bottom_id_vecs_[layer_id][bottom_id]] ||
-							bottom_need_backward_[layer_id][bottom_id];
+							bottom_need_backward_[layer_id][bottom_id];//该层是否反向传播
 					}
 					for (int param_id = 0; param_id < layers_[layer_id]->blobs().size();
-							++param_id) {
-						layers_[layer_id]->set_param_propagate_down(param_id, true);
+							++param_id) {//处理每个参数数据
+						layers_[layer_id]->set_param_propagate_down(param_id, true);//强制进行反向传播
 					}
 				}
 			}
+			//剩下的就是output了
 			// In the end, all remaining blobs are considered output blobs.
 			for (set<string>::iterator it = available_blobs.begin();
 					it != available_blobs.end(); ++it) {
@@ -254,13 +258,13 @@ namespace caffe {
 				net_output_blob_indices_.push_back(blob_name_to_idx[*it]);
 			}
 			for (size_t blob_id = 0; blob_id < blob_names_.size(); ++blob_id) {
-				blob_names_index_[blob_names_[blob_id]] = blob_id;
+				blob_names_index_[blob_names_[blob_id]] = blob_id;//blob 名字和索引id的对应关系
 			}
 			for (size_t layer_id = 0; layer_id < layer_names_.size(); ++layer_id) {
-				layer_names_index_[layer_names_[layer_id]] = layer_id;
+				layer_names_index_[layer_names_[layer_id]] = layer_id;//layer名字和索引id的对应关系
 			}
-			ShareWeights();
-			debug_info_ = param.debug_info();
+			ShareWeights();//处理共享参数权重
+			debug_info_ = param.debug_info();//debug信息
 			LOG_IF(INFO, Caffe::root_solver()) << "Network initialization done.";
 		}
 
@@ -373,19 +377,19 @@ namespace caffe {
 				layer_param->top(top_id) : "(automatic)";
 			// Check if we are doing in-place computation
 			if (blob_name_to_idx && layer_param->bottom_size() > top_id &&
-					blob_name == layer_param->bottom(top_id)) {
+					blob_name == layer_param->bottom(top_id)) {//同层共享输入输出数据了
 				// In-place computation
 				LOG_IF(INFO, Caffe::root_solver())
 					<< layer_param->name() << " -> " << blob_name << " (in-place)";
 				top_vecs_[layer_id].push_back(blobs_[(*blob_name_to_idx)[blob_name]].get());
 				top_id_vecs_[layer_id].push_back((*blob_name_to_idx)[blob_name]);
 			} else if (blob_name_to_idx &&
-					blob_name_to_idx->find(blob_name) != blob_name_to_idx->end()) {
+					blob_name_to_idx->find(blob_name) != blob_name_to_idx->end()) {//输入重名
 				// If we are not doing in-place computation but have duplicated blobs,
 				// raise an error.
 				LOG(FATAL) << "Top blob '" << blob_name
 					<< "' produced by multiple sources.";
-			} else {
+			} else {//正常的走这里
 				// Normal output.
 				if (Caffe::root_solver()) {
 					LOG(INFO) << layer_param->name() << " -> " << blob_name;
@@ -403,6 +407,7 @@ namespace caffe {
 		}
 
 	// Helper for Net::Init: add a new bottom blob to the net.
+	//处理输入数据，blob存了所有中间数据，available存了出现过的blob
 	template <typename Dtype>
 		int Net<Dtype>::AppendBottom(const NetParameter& param, const int layer_id,
 				const int bottom_id, set<string>* available_blobs,
@@ -432,59 +437,59 @@ namespace caffe {
 		void Net<Dtype>::AppendParam(const NetParameter& param, const int layer_id,
 				const int param_id) {
 			const LayerParameter& layer_param = layers_[layer_id]->layer_param();
-			const int param_size = layer_param.param_size();
+			const int param_size = layer_param.param_size();//该层参数的个数
 			string param_name =
-				(param_size > param_id) ? layer_param.param(param_id).name() : "";
-			if (param_name.size()) {
+				(param_size > param_id) ? layer_param.param(param_id).name() : "";//该层的名字
+			if (param_name.size()) {//如果该层参数有名字
 				param_display_names_.push_back(param_name);
-			} else {
+			} else {//如果该层没填参数名字
 				ostringstream param_display_name;
-				param_display_name << param_id;
-				param_display_names_.push_back(param_display_name.str());
+				param_display_name << param_id;//这个是layer的参数id
+				param_display_names_.push_back(param_display_name.str());//直接用参数id当作名字
 			}
-			const int net_param_id = params_.size();
-			params_.push_back(layers_[layer_id]->blobs()[param_id]);
-			param_id_vecs_[layer_id].push_back(net_param_id);
-			param_layer_indices_.push_back(make_pair(layer_id, param_id));
+			const int net_param_id = params_.size();//网络参数id
+			params_.push_back(layers_[layer_id]->blobs()[param_id]);//放在params vector里面
+			param_id_vecs_[layer_id].push_back(net_param_id);//参数和参数id的对应关系
+			param_layer_indices_.push_back(make_pair(layer_id, param_id));//layer id 和 参数 id的对应关系
 			ParamSpec default_param_spec;
 			const ParamSpec* param_spec = (layer_param.param_size() > param_id) ?
-				&layer_param.param(param_id) : &default_param_spec;
+				&layer_param.param(param_id) : &default_param_spec;//拿到当前的参数，copy了一份出来
 			if (!param_size || !param_name.size() || (param_name.size() &&
-						param_names_index_.find(param_name) == param_names_index_.end())) {
+						param_names_index_.find(param_name) == param_names_index_.end())) {//参数为空   or 参数名为空 or 以前不存在过这个参数名，那么这个参数是自己独享的
 				// This layer "owns" this parameter blob -- it is either anonymous
 				// (i.e., not given a param_name) or explicitly given a name that we
 				// haven't already seen.
-				param_owners_.push_back(-1);
+				param_owners_.push_back(-1);//-1 表示独享这个参数
 				if (param_name.size()) {
-					param_names_index_[param_name] = net_param_id;
+					param_names_index_[param_name] = net_param_id;//参数名字核索引的对应关系
 				}
-				const int learnable_param_id = learnable_params_.size();
-				learnable_params_.push_back(params_[net_param_id].get());
-				learnable_param_ids_.push_back(learnable_param_id);
-				has_params_lr_.push_back(param_spec->has_lr_mult());
-				has_params_decay_.push_back(param_spec->has_decay_mult());
-				params_lr_.push_back(param_spec->lr_mult());
-				params_weight_decay_.push_back(param_spec->decay_mult());
-			} else {
+				const int learnable_param_id = learnable_params_.size();//可学习参数的id
+				learnable_params_.push_back(params_[net_param_id].get());//放入可学习参数vector中
+				learnable_param_ids_.push_back(learnable_param_id);//放入可学习参数idvector中
+				has_params_lr_.push_back(param_spec->has_lr_mult());//该参数是否有学习率
+				has_params_decay_.push_back(param_spec->has_decay_mult());//该参数是否有衰变率
+				params_lr_.push_back(param_spec->lr_mult());//放入学习率
+				params_weight_decay_.push_back(param_spec->decay_mult());//放入学习衰变率
+			} else {//以下是共享学习参数
 				// Named param blob with name we've seen before: share params
-				const int owner_net_param_id = param_names_index_[param_name];
-				param_owners_.push_back(owner_net_param_id);
+				const int owner_net_param_id = param_names_index_[param_name];//拿出以前的参数id
+				param_owners_.push_back(owner_net_param_id);//把参数id放进去
 				const pair<int, int>& owner_index =
-					param_layer_indices_[owner_net_param_id];
-				const int owner_layer_id = owner_index.first;
-				const int owner_param_id = owner_index.second;
+					param_layer_indices_[owner_net_param_id];//拿出layer id 和参数id
+				const int owner_layer_id = owner_index.first;//拿出来共享的层id
+				const int owner_param_id = owner_index.second;//拿出共享的层参数id
 				LOG_IF(INFO, Caffe::root_solver()) << "Sharing parameters '" << param_name
 					<< "' owned by "
 					<< "layer '" << layer_names_[owner_layer_id] << "', param "
 					<< "index " << owner_param_id;
-				Blob<Dtype>* this_blob = layers_[layer_id]->blobs()[param_id].get();
+				Blob<Dtype>* this_blob = layers_[layer_id]->blobs()[param_id].get();//拿到该层的数据
 				Blob<Dtype>* owner_blob =
-					layers_[owner_layer_id]->blobs()[owner_param_id].get();
-				const int param_size = layer_param.param_size();
+					layers_[owner_layer_id]->blobs()[owner_param_id].get();//共享参数数据
+				const int param_size = layer_param.param_size();//参数个数
 				if (param_size > param_id && (layer_param.param(param_id).share_mode() ==
-							ParamSpec_DimCheckMode_PERMISSIVE)) {
+							ParamSpec_DimCheckMode_PERMISSIVE)) {//一种模式吧
 					// Permissive dimension checking -- only check counts are the same.
-					CHECK_EQ(this_blob->count(), owner_blob->count())
+					CHECK_EQ(this_blob->count(), owner_blob->count())//共享数据间大小要一样
 						<< "Cannot share param '" << param_name << "' owned by layer '"
 						<< layer_names_[owner_layer_id] << "' with layer '"
 						<< layer_names_[layer_id] << "'; count mismatch.  Owner layer param "
@@ -492,7 +497,7 @@ namespace caffe {
 						<< "shape is " << this_blob->shape_string();
 				} else {
 					// Strict dimension checking -- all dims must be the same.
-					CHECK(this_blob->shape() == owner_blob->shape())
+					CHECK(this_blob->shape() == owner_blob->shape())//共享数据间，维度信息要一致
 						<< "Cannot share param '" << param_name << "' owned by layer '"
 						<< layer_names_[owner_layer_id] << "' with layer '"
 						<< layer_names_[layer_id] << "'; shape mismatch.  Owner layer param "
@@ -500,22 +505,24 @@ namespace caffe {
 						<< "expects shape " << this_blob->shape_string();
 				}
 				const int learnable_param_id = learnable_param_ids_[owner_net_param_id];
-				learnable_param_ids_.push_back(learnable_param_id);
+				learnable_param_ids_.push_back(learnable_param_id);//参数id，共享了参数id
+				//处理学习率
 				if (param_spec->has_lr_mult()) {
-					if (has_params_lr_[learnable_param_id]) {
+					if (has_params_lr_[learnable_param_id]) {//如果本身有学习率，，需要相等
 						CHECK_EQ(param_spec->lr_mult(), params_lr_[learnable_param_id])
 							<< "Shared param '" << param_name << "' has mismatched lr_mult.";
-					} else {
+					} else {//如果没有，重新设置
 						has_params_lr_[learnable_param_id] = true;
 						params_lr_[learnable_param_id] = param_spec->lr_mult();
 					}
 				}
+				//处理衰变率
 				if (param_spec->has_decay_mult()) {
-					if (has_params_decay_[learnable_param_id]) {
+					if (has_params_decay_[learnable_param_id]) {//如果本身有衰变率，需要相等
 						CHECK_EQ(param_spec->decay_mult(),
 								params_weight_decay_[learnable_param_id])
 							<< "Shared param '" << param_name << "' has mismatched decay_mult.";
-					} else {
+					} else {//如果没有，重新设置
 						has_params_decay_[learnable_param_id] = true;
 						params_weight_decay_[learnable_param_id] = param_spec->decay_mult();
 					}
@@ -523,6 +530,7 @@ namespace caffe {
 			}
 		}
 
+	//上面的是初始化	
 	template <typename Dtype>
 		Dtype Net<Dtype>::ForwardFromTo(int start, int end) {//从start到end，前向传播
 			CHECK_GE(start, 0);
@@ -779,7 +787,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::CopyTrainedLayersFrom(const string trained_filename) {
+		void Net<Dtype>::CopyTrainedLayersFrom(const string trained_filename) {//从文件中导入网络参数
 			if (H5Fis_hdf5(trained_filename.c_str())) {
 				CopyTrainedLayersFromHDF5(trained_filename);
 			} else {
@@ -788,7 +796,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::CopyTrainedLayersFromBinaryProto(
+		void Net<Dtype>::CopyTrainedLayersFromBinaryProto(//从pb中导入网络参数
 				const string trained_filename) {
 			NetParameter param;
 			ReadNetParamsFromBinaryFileOrDie(trained_filename, &param);
@@ -943,7 +951,7 @@ namespace caffe {
 		}
 
 	template <typename Dtype>
-		void Net<Dtype>::ShareWeights() {//共享权重参数
+		void Net<Dtype>::ShareWeights() {//处理那种共享权重参数
 			for (int i = 0; i < params_.size(); ++i) {
 				if (param_owners_[i] < 0) { continue; }
 				params_[i]->ShareData(*params_[param_owners_[i]]);

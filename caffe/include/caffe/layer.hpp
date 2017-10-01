@@ -265,7 +265,7 @@ namespace caffe {
 				 * setting and backpropagate to blob i only if it needs gradient information
 				 * (as is done when force_backward == false).
 				 */
-				virtual inline bool AllowForceBackward(const int bottom_index) const {//是否允许反向传播
+				virtual inline bool AllowForceBackward(const int bottom_index) const {//是否允许强制反向传播
 					return true;
 				}
 

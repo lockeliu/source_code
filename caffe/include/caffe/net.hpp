@@ -300,7 +300,7 @@ namespace caffe {
 						  vector<vector<int> > top_id_vecs_;//存储了每一层输出id
 						  /// Vector of weight in the loss (or objective) function of each net blob,
 						  /// indexed by blob_id.
-						  vector<Dtype> blob_loss_weights_;
+						  vector<Dtype> blob_loss_weights_;//每个blobs的loss weight
 						  vector<vector<int> > param_id_vecs_;
 						  vector<int> param_owners_;
 						  vector<string> param_display_names_;
