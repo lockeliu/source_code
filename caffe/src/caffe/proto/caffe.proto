@@ -568,18 +568,18 @@ message ContrastiveLossParameter {
 }
 
 message ConvolutionParameter {
-	optional uint32 num_output = 1; // The number of outputs for the layer
-	optional bool bias_term = 2 [default = true]; // whether to have bias terms
+	optional uint32 num_output = 1; // The number of outputs for the layer//卷积核个数
+	optional bool bias_term = 2 [default = true]; // whether to have bias terms//是否有偏置项
 
 	// Pad, kernel size, and stride are all given as a single value for equal
 	// dimensions in all spatial dimensions, or once per spatial dimension.
-	repeated uint32 pad = 3; // The padding size; defaults to 0
-	repeated uint32 kernel_size = 4; // The kernel size
-	repeated uint32 stride = 6; // The stride; defaults to 1
+	repeated uint32 pad = 3; // The padding size; defaults to 0//添加项
+	repeated uint32 kernel_size = 4; // The kernel size//卷积核大小
+	repeated uint32 stride = 6; // The stride; defaults to 1//卷积核移动步长
 	// Factor used to dilate the kernel, (implicitly) zero-filling the resulting
 	// holes. (Kernel dilation is sometimes referred to by its use in the
 	// algorithme à trous from Holschneider et al. 1987.)
-	repeated uint32 dilation = 18; // The dilation; defaults to 1
+	repeated uint32 dilation = 18; // The dilation; defaults to 1//扩展的倍数，这个是为了扩大视野
 
 	// For 2D convolution only, the *_h and *_w versions may also be used to
 	// specify both spatial dimensions.
@@ -592,14 +592,14 @@ message ConvolutionParameter {
 
 	optional uint32 group = 5 [default = 1]; // The group size for group conv
 
-	optional FillerParameter weight_filler = 7; // The filler for the weight
-	optional FillerParameter bias_filler = 8; // The filler for the bias
+	optional FillerParameter weight_filler = 7; // The filler for the weight//权重的初始化
+	optional FillerParameter bias_filler = 8; // The filler for the bias//偏置项的初始化
 	enum Engine {
 		DEFAULT = 0;
 		CAFFE = 1;
 		CUDNN = 2;
 	}
-	optional Engine engine = 15 [default = DEFAULT];
+	optional Engine engine = 15 [default = DEFAULT];//引擎种类
 
 	// The axis to interpret as "channels" when performing convolution.
 	// Preceding dimensions are treated as independent inputs;

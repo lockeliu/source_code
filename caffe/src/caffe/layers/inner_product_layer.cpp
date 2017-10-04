@@ -89,7 +89,7 @@ namespace caffe {
 			caffe_cpu_gemm<Dtype>(CblasNoTrans, transpose_ ? CblasNoTrans : CblasTrans,
 					M_, N_, K_,
 					(Dtype)1.,bottom_data, weight,
-					(Dtype)0., top_data);//输出矩阵 = 输入矩阵 * 权重
+					(Dtype)0., top_data);//top_data = bottom_data * weight
 			if (bias_term_) {//其实这个bias_multiplier是 1 * M_，在cblas_sgemm中 1 * M_ 和 M_ * 1 没什么区别
 				caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, M_, N_, 1,
 						(Dtype)1., bias_multiplier_.cpu_data(),this->blobs_[1]->cpu_data(), 
