@@ -21,6 +21,7 @@ namespace caffe {
 			}
 		}
 
+	//前向传播，转换成矩阵相乘，有偏置项的话，加上偏置项就行了
 	template <typename Dtype>
 		void ConvolutionLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 				const vector<Blob<Dtype>*>& top) {//前向传播
@@ -28,7 +29,7 @@ namespace caffe {
 			for (int i = 0; i < bottom.size(); ++i) {//遍历每个输入数据
 				const Dtype* bottom_data = bottom[i]->cpu_data();//拿到输入数据
 				Dtype* top_data = top[i]->mutable_cpu_data();//拿到输出数据的指针
-				for (int n = 0; n < this->num_; ++n) {
+				for (int n = 0; n < this->num_; ++n) {//batch 中每个都单独处理
 					this->forward_cpu_gemm(bottom_data + n * this->bottom_dim_, weight,
 							top_data + n * this->top_dim_);
 					if (this->bias_term_) {
@@ -39,30 +40,34 @@ namespace caffe {
 			}
 		}
 
+	//其实它的求导完全和全连接层一样
 	template <typename Dtype>
 		void ConvolutionLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
 				const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {//反向传播
 			const Dtype* weight = this->blobs_[0]->cpu_data();
 			Dtype* weight_diff = this->blobs_[0]->mutable_cpu_diff();
-			for (int i = 0; i < top.size(); ++i) {
+			for (int i = 0; i < top.size(); ++i) {//遍历每一个输出数据
 				const Dtype* top_diff = top[i]->cpu_diff();
 				const Dtype* bottom_data = bottom[i]->cpu_data();
 				Dtype* bottom_diff = bottom[i]->mutable_cpu_diff();
 				// Bias gradient, if necessary.
+				//对偏置项求导 bias_diff = top_diff * (全1) + bias_diff
 				if (this->bias_term_ && this->param_propagate_down_[1]) {
 					Dtype* bias_diff = this->blobs_[1]->mutable_cpu_diff();
-					for (int n = 0; n < this->num_; ++n) {
+					for (int n = 0; n < this->num_; ++n) {//遍历batch size的每一个
 						this->backward_cpu_bias(bias_diff, top_diff + n * this->top_dim_);
 					}
 				}
 				if (this->param_propagate_down_[0] || propagate_down[i]) {
-					for (int n = 0; n < this->num_; ++n) {
+					for (int n = 0; n < this->num_; ++n) {//遍历batch size的每一个
 						// gradient w.r.t. weight. Note that we will accumulate diffs.
+						//对w求导weight_diff = bottom * top_diff + weight, 梯度累积
 						if (this->param_propagate_down_[0]) {
 							this->weight_cpu_gemm(bottom_data + n * this->bottom_dim_,
 									top_diff + n * this->top_dim_, weight_diff);
 						}
 						// gradient w.r.t. bottom data, if necessary.
+						//处理梯度的传递, bottom_diff = weight * top_diff
 						if (propagate_down[i]) {
 							this->backward_cpu_gemm(top_diff + n * this->top_dim_, weight,
 									bottom_diff + n * this->bottom_dim_);
