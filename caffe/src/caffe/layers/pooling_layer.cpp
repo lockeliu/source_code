@@ -16,29 +16,31 @@ namespace caffe {
 			PoolingParameter pool_param = this->layer_param_.pooling_param();
 			if (pool_param.global_pooling()) {//是否是全局池化，如果是的话，不需要卷积参数
 				CHECK(!(pool_param.has_kernel_size() ||
-							pool_param.has_kernel_h() || pool_param.has_kernel_w()))
+							pool_param.has_kernel_h() || pool_param.has_kernel_w()))//如果是全局池化，不能有这些参数，也不需要
 					<< "With Global_pooling: true Filter size cannot specified";
 			} else {
 				CHECK(!pool_param.has_kernel_size() !=
-						!(pool_param.has_kernel_h() && pool_param.has_kernel_w()))
+						!(pool_param.has_kernel_h() && pool_param.has_kernel_w()))//两种池化核的参数只能有一种出现
 					<< "Filter size is kernel_size OR kernel_h and kernel_w; not both";
 				CHECK(pool_param.has_kernel_size() ||
-						(pool_param.has_kernel_h() && pool_param.has_kernel_w()))
+						(pool_param.has_kernel_h() && pool_param.has_kernel_w()))//两种池化核必须有一种
 					<< "For non-square filters both kernel_h and kernel_w are required.";
 			}
 			CHECK((!pool_param.has_pad() && pool_param.has_pad_h()
 						&& pool_param.has_pad_w())
-					|| (!pool_param.has_pad_h() && !pool_param.has_pad_w()))
+					|| (!pool_param.has_pad_h() && !pool_param.has_pad_w()))//不能两种填充方式都存在
 				<< "pad is pad OR pad_h and pad_w are required.";
 			CHECK((!pool_param.has_stride() && pool_param.has_stride_h()
 						&& pool_param.has_stride_w())
-					|| (!pool_param.has_stride_h() && !pool_param.has_stride_w()))
+					|| (!pool_param.has_stride_h() && !pool_param.has_stride_w()))//不能两种步长方式都存在
 				<< "Stride is stride OR stride_h and stride_w are required.";
-			global_pooling_ = pool_param.global_pooling();
-			if (global_pooling_) {
+			global_pooling_ = pool_param.global_pooling();//是否是全局池化
+			if (global_pooling_) {//全局池化
+				//赋值池化核
 				kernel_h_ = bottom[0]->height();
 				kernel_w_ = bottom[0]->width();
 			} else {
+				//赋值池化核
 				if (pool_param.has_kernel_size()) {
 					kernel_h_ = kernel_w_ = pool_param.kernel_size();
 				} else {
@@ -46,21 +48,25 @@ namespace caffe {
 					kernel_w_ = pool_param.kernel_w();
 				}
 			}
+			//池化核必须大于0
 			CHECK_GT(kernel_h_, 0) << "Filter dimensions cannot be zero.";
 			CHECK_GT(kernel_w_, 0) << "Filter dimensions cannot be zero.";
+			//赋值填充信息
 			if (!pool_param.has_pad_h()) {
 				pad_h_ = pad_w_ = pool_param.pad();
 			} else {
 				pad_h_ = pool_param.pad_h();
 				pad_w_ = pool_param.pad_w();
 			}
+			//赋值步长信息
 			if (!pool_param.has_stride_h()) {
 				stride_h_ = stride_w_ = pool_param.stride();
 			} else {
 				stride_h_ = pool_param.stride_h();
 				stride_w_ = pool_param.stride_w();
 			}
-			if (global_pooling_) {
+			
+			if (global_pooling_) {//全局池化必须没有填充信息，步长为1
 				CHECK(pad_h_ == 0 && pad_w_ == 0 && stride_h_ == 1 && stride_w_ == 1)
 					<< "With Global_pooling: true; only pad = 0 and stride = 1";
 			}
@@ -68,9 +74,9 @@ namespace caffe {
 				CHECK(this->layer_param_.pooling_param().pool()
 						== PoolingParameter_PoolMethod_AVE
 						|| this->layer_param_.pooling_param().pool()
-						== PoolingParameter_PoolMethod_MAX)
+						== PoolingParameter_PoolMethod_MAX)//只有max avg pooling 才有填充信息
 					<< "Padding implemented only for average and max pooling.";
-				CHECK_LT(pad_h_, kernel_h_);
+				CHECK_LT(pad_h_, kernel_h_);//填充信息必须小于等于池化核
 				CHECK_LT(pad_w_, kernel_w_);
 			}
 		}
@@ -87,6 +93,7 @@ namespace caffe {
 				kernel_h_ = bottom[0]->height();
 				kernel_w_ = bottom[0]->width();
 			}
+			//计算池化之后的大小
 			pooled_height_ = static_cast<int>(ceil(static_cast<float>(
 							height_ + 2 * pad_h_ - kernel_h_) / stride_h_)) + 1;
 			pooled_width_ = static_cast<int>(ceil(static_cast<float>(
@@ -103,6 +110,7 @@ namespace caffe {
 				CHECK_LT((pooled_height_ - 1) * stride_h_, height_ + pad_h_);
 				CHECK_LT((pooled_width_ - 1) * stride_w_, width_ + pad_w_);
 			}
+			//初始化池化后的大小
 			top[0]->Reshape(bottom[0]->num(), channels_, pooled_height_,
 					pooled_width_);
 			if (top.size() > 1) {
@@ -110,13 +118,13 @@ namespace caffe {
 			}
 			// If max pooling, we will initialize the vector index part.
 			if (this->layer_param_.pooling_param().pool() ==
-					PoolingParameter_PoolMethod_MAX && top.size() == 1) {
+					PoolingParameter_PoolMethod_MAX && top.size() == 1) {//最大值池化，用来记录最大值映射到哪里的
 				max_idx_.Reshape(bottom[0]->num(), channels_, pooled_height_,
 						pooled_width_);
 			}
 			// If stochastic pooling, we will initialize the random index part.
 			if (this->layer_param_.pooling_param().pool() ==
-					PoolingParameter_PoolMethod_STOCHASTIC) {
+					PoolingParameter_PoolMethod_STOCHASTIC) {//随机池化，用来记录随机到那个点的
 				rand_idx_.Reshape(bottom[0]->num(), channels_, pooled_height_,
 						pooled_width_);
 			}
@@ -139,10 +147,10 @@ namespace caffe {
 			switch (this->layer_param_.pooling_param().pool()) {
 				case PoolingParameter_PoolMethod_MAX:
 					// Initialize
-					if (use_top_mask) {
+					if (use_top_mask) {//使用top 的第二个参数来mask
 						top_mask = top[1]->mutable_cpu_data();
 						caffe_set(top_count, Dtype(-1), top_mask);
-					} else {
+					} else {//使用自己内部的参数来mask
 						mask = max_idx_.mutable_cpu_data();
 						caffe_set(top_count, -1, mask);
 					}
@@ -162,9 +170,9 @@ namespace caffe {
 									for (int h = hstart; h < hend; ++h) {
 										for (int w = wstart; w < wend; ++w) {
 											const int index = h * width_ + w;
-											if (bottom_data[index] > top_data[pool_index]) {
+											if (bottom_data[index] > top_data[pool_index]) {//如果比当前记录的大，直接替换
 												top_data[pool_index] = bottom_data[index];
-												if (use_top_mask) {
+												if (use_top_mask) {//记录哪个是最大值的index
 													top_mask[pool_index] = static_cast<Dtype>(index);
 												} else {
 													mask[pool_index] = index;
@@ -175,6 +183,7 @@ namespace caffe {
 								}
 							}
 							// compute offset
+							// 增加偏移量
 							bottom_data += bottom[0]->offset(0, 1);
 							top_data += top[0]->offset(0, 1);
 							if (use_top_mask) {
