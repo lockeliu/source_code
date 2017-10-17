@@ -18,7 +18,7 @@ namespace caffe {
 				CHECK(!(pool_param.has_kernel_size() ||
 							pool_param.has_kernel_h() || pool_param.has_kernel_w()))//如果是全局池化，不能有这些参数，也不需要
 					<< "With Global_pooling: true Filter size cannot specified";
-			} else {
+			} else {//这里两种判断貌似是重复的
 				CHECK(!pool_param.has_kernel_size() !=
 						!(pool_param.has_kernel_h() && pool_param.has_kernel_w()))//两种池化核的参数只能有一种出现
 					<< "Filter size is kernel_size OR kernel_h and kernel_w; not both";
@@ -28,11 +28,11 @@ namespace caffe {
 			}
 			CHECK((!pool_param.has_pad() && pool_param.has_pad_h()
 						&& pool_param.has_pad_w())
-					|| (!pool_param.has_pad_h() && !pool_param.has_pad_w()))//不能两种填充方式都存在
+					|| (!pool_param.has_pad_h() && !pool_param.has_pad_w()))//pad 在proto 都是default 0，所以没啥事
 				<< "pad is pad OR pad_h and pad_w are required.";
 			CHECK((!pool_param.has_stride() && pool_param.has_stride_h()
 						&& pool_param.has_stride_w())
-					|| (!pool_param.has_stride_h() && !pool_param.has_stride_w()))//不能两种步长方式都存在
+					|| (!pool_param.has_stride_h() && !pool_param.has_stride_w()))//判断有点多余
 				<< "Stride is stride OR stride_h and stride_w are required.";
 			global_pooling_ = pool_param.global_pooling();//是否是全局池化
 			if (global_pooling_) {//全局池化
@@ -98,6 +98,7 @@ namespace caffe {
 							height_ + 2 * pad_h_ - kernel_h_) / stride_h_)) + 1;
 			pooled_width_ = static_cast<int>(ceil(static_cast<float>(
 							width_ + 2 * pad_w_ - kernel_w_) / stride_w_)) + 1;
+			//防止最后一个池化核全部在pad里面
 			if (pad_h_ || pad_w_) {
 				// If we have padding, ensure that the last pooling starts strictly
 				// inside the image (instead of at the padding); otherwise clip the last.
@@ -135,17 +136,17 @@ namespace caffe {
 	template <typename Dtype>
 		void PoolingLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 				const vector<Blob<Dtype>*>& top) {
-			const Dtype* bottom_data = bottom[0]->cpu_data();
-			Dtype* top_data = top[0]->mutable_cpu_data();
-			const int top_count = top[0]->count();
+			const Dtype* bottom_data = bottom[0]->cpu_data();//输入数据
+			Dtype* top_data = top[0]->mutable_cpu_data();//输出数据
+			const int top_count = top[0]->count();//输出数据的个数
 			// We'll output the mask to top[1] if it's of size >1.
-			const bool use_top_mask = top.size() > 1;
+			const bool use_top_mask = top.size() > 1;//是否用top来记录回溯信息
 			int* mask = NULL;  // suppress warnings about uninitalized variables
 			Dtype* top_mask = NULL;
 			// Different pooling methods. We explicitly do the switch outside the for
 			// loop to save time, although this results in more code.
 			switch (this->layer_param_.pooling_param().pool()) {
-				case PoolingParameter_PoolMethod_MAX:
+				case PoolingParameter_PoolMethod_MAX://最大值池化
 					// Initialize
 					if (use_top_mask) {//使用top 的第二个参数来mask
 						top_mask = top[1]->mutable_cpu_data();
@@ -194,7 +195,7 @@ namespace caffe {
 						}
 					}
 					break;
-				case PoolingParameter_PoolMethod_AVE:
+				case PoolingParameter_PoolMethod_AVE://平均值池化
 					for (int i = 0; i < top_count; ++i) {
 						top_data[i] = 0;
 					}
@@ -212,12 +213,14 @@ namespace caffe {
 									wstart = max(wstart, 0);
 									hend = min(hend, height_);
 									wend = min(wend, width_);
+									//求和
 									for (int h = hstart; h < hend; ++h) {
 										for (int w = wstart; w < wend; ++w) {
 											top_data[ph * pooled_width_ + pw] +=
 												bottom_data[h * width_ + w];
 										}
 									}
+									//求平均值
 									top_data[ph * pooled_width_ + pw] /= pool_size;
 								}
 							}
@@ -262,6 +265,7 @@ namespace caffe {
 						for (int c = 0; c < channels_; ++c) {
 							for (int ph = 0; ph < pooled_height_; ++ph) {
 								for (int pw = 0; pw < pooled_width_; ++pw) {
+									//反映射回去
 									const int index = ph * pooled_width_ + pw;
 									const int bottom_index =
 										use_top_mask ? top_mask[index] : mask[index];
@@ -293,6 +297,7 @@ namespace caffe {
 									wstart = max(wstart, 0);
 									hend = min(hend, height_);
 									wend = min(wend, width_);
+									//平均回去。。。
 									for (int h = hstart; h < hend; ++h) {
 										for (int w = wstart; w < wend; ++w) {
 											bottom_diff[h * width_ + w] +=
