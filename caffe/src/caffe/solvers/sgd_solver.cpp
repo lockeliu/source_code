@@ -28,17 +28,17 @@ namespace caffe {
 			Dtype rate;
 			const string& lr_policy = this->param_.lr_policy();
 			if (lr_policy == "fixed") {
-				rate = this->param_.base_lr();
+				rate = this->param_.base_lr();//固定不变的学习率
 			} else if (lr_policy == "step") {
 				this->current_step_ = this->iter_ / this->param_.stepsize();
 				rate = this->param_.base_lr() *
-					pow(this->param_.gamma(), this->current_step_);
+					pow(this->param_.gamma(), this->current_step_);//base_lr * gamma ^（ floor（iter/stepsize))
 			} else if (lr_policy == "exp") {
-				rate = this->param_.base_lr() * pow(this->param_.gamma(), this->iter_);
+				rate = this->param_.base_lr() * pow(this->param_.gamma(), this->iter_);//base_lr * gamma ^ iter
 			} else if (lr_policy == "inv") {
 				rate = this->param_.base_lr() *
 					pow(Dtype(1) + this->param_.gamma() * this->iter_,
-							- this->param_.power());
+							- this->param_.power()); 
 			} else if (lr_policy == "multistep") {
 				if (this->current_step_ < this->param_.stepvalue_size() &&
 						this->iter_ >= this->param_.stepvalue(this->current_step_)) {
@@ -51,11 +51,11 @@ namespace caffe {
 			} else if (lr_policy == "poly") {
 				rate = this->param_.base_lr() * pow(Dtype(1.) -
 						(Dtype(this->iter_) / Dtype(this->param_.max_iter())),
-						this->param_.power());
+						this->param_.power());//base_lr ( 1 - iter / max_iter ) ^ ( power )
 			} else if (lr_policy == "sigmoid") {
 				rate = this->param_.base_lr() * (Dtype(1.) /
 						(Dtype(1.) + exp(-this->param_.gamma() * (Dtype(this->iter_) -
-																  Dtype(this->param_.stepsize())))));
+																  Dtype(this->param_.stepsize()))))); //base_lr ( 1/ 1＋exp ( -gamma * ( iter - stepsize ) ) )
 			} else {
 				LOG(FATAL) << "Unknown learning rate policy: " << lr_policy;
 			}
@@ -108,13 +108,20 @@ namespace caffe {
 			ClipGradients();
 			for (int param_id = 0; param_id < this->net_->learnable_params().size();
 					++param_id) {
+                //除以iter_size
+                //diff = diff / iter_size
 				Normalize(param_id);
+                //加上衰减系数，防止过拟合,正则化
+                //diff += decy * data
 				Regularize(param_id);
+                //权重叠加
+                // diff = rate * diff + history_diff * momentum
 				ComputeUpdateValue(param_id, rate);
 			}
 			this->net_->Update();
 		}
 
+    //除以iter_size
 	template <typename Dtype>
 		void SGDSolver<Dtype>::Normalize(int param_id) {
 			if (this->param_.iter_size() == 1) { return; }
@@ -141,6 +148,7 @@ namespace caffe {
 			}
 		}
 
+    //L1，L2 正则化，防止过拟合
 	template <typename Dtype>
 		void SGDSolver<Dtype>::Regularize(int param_id) {
 			const vector<Blob<Dtype>*>& net_params = this->net_->learnable_params();
@@ -209,6 +217,8 @@ namespace caffe {
 				Dtype local_rate);
 #endif
 
+    //计算真正的diff
+    //diff = rate * diff + diff * momentum
 	template <typename Dtype>
 		void SGDSolver<Dtype>::ComputeUpdateValue(int param_id, Dtype rate) {
 			const vector<Blob<Dtype>*>& net_params = this->net_->learnable_params();
