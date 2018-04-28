@@ -28,8 +28,12 @@ namespace caffe {
 
         template <typename Dtype>
                 void LiftedStructSimilaritySoftmaxLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
-
+                        //1、 计算两个向量之间的欧氏距离
+                        //dist_sq_[i] 记录的是第i个向量的内积 sum( x0*x0 + x1*x1 + x2*x2 + .... );
+                        //dot_[i][j] 记录的是第i个向量和第j个向量的欧氏距离
+                        // sqrt( (x0-y0)*(x0-y0) + (x1-y1)*(x1-y1) ) = sqrt( x0*x0 + x1*x1 + y0*y0 +y1*y1 -2*x0y0 - 2*x1*y1 );
                         const int channels = bottom[0]->channels();
+                        //dist_sq_ = sum(Xi*Xi);
                         for (int i = 0; i < bottom[0]->num(); i++){
                                 dist_sq_.mutable_cpu_data()[i] = caffe_cpu_dot(channels, bottom[0]->cpu_data() + (i*channels), bottom[0]->cpu_data() + (i*channels));
                         }
@@ -42,6 +46,7 @@ namespace caffe {
                         const Dtype* bottom_data2 = bottom[0]->cpu_data();
 
                         Dtype dot_scaler(-2.0);
+                        //dot_ = -2.0 * bottom * bottomT
                         caffe_cpu_gemm<Dtype>(CblasNoTrans, CblasTrans, M_, N_, K_, dot_scaler, bottom_data1, bottom_data2, (Dtype)0., dot_.mutable_cpu_data());
 
                         // add ||x_i||^2 to all elements in row i
@@ -54,6 +59,7 @@ namespace caffe {
                                 caffe_axpy(N_, Dtype(1.0), dist_sq_.cpu_data(), dot_.mutable_cpu_data() + i*N_);
                         }
 
+                        //2、计算正负样本关系
                         // construct pairwise label matrix
                         vector<vector<bool> > label_mat(N_, vector<bool>(N_, false));
                         for (int i=0; i<N_; i++){
@@ -74,16 +80,19 @@ namespace caffe {
                         }
 
                         // loop upper triangular matrix and look for positive anchors
+                        //3、计算loss
                         for (int i=0; i<N_; i++){
                                 for (int j=i+1; j<N_; j++){
 
                                         // found a positive pair @ anchor (i, j)
+                                        // 找到一对正样本
                                         if (label_mat[i][j]){
                                                 Dtype dist_pos = sqrt(dot_.cpu_data()[i*N_ + j]);
 
                                                 caffe_sub(K_, bin + i*K_, bin + j*K_, blob_pos_diff_.mutable_cpu_data());
 
                                                 // 1.count the number of negatives for this positive
+                                                // 找负样本
                                                 int num_negatives = 0;
                                                 for (int k=0; k<N_; k++){
                                                         if (!label_mat[i][k]){
@@ -124,6 +133,7 @@ namespace caffe {
                                                 }
 
                                                 // compute softmax of loss aug inference vector;
+                                                // 反正值过大的一种优化
                                                 Dtype max_elem = *std::max_element(loss_aug_inference_.cpu_data(), loss_aug_inference_.cpu_data() + num_negatives);
 
                                                 caffe_add_scalar(loss_aug_inference_.count(), Dtype(-1.0)*max_elem, loss_aug_inference_.mutable_cpu_data());
